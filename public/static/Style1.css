@@ -1,0 +1,456 @@
+*
+{
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;
+  font-size:17px;
+  font-weight: bold;
+  
+}
+
+
+:root{
+    --FormColor1:rgba(237,184,121,0.8);
+    --FormColor2:rgba(189, 27, 243, 0.8);
+    --GreenButton:#04AA6D;
+    --GreyButton:#a7a7a7;
+}
+.Forms{
+  text-align: right; 
+}
+.Forms label{
+  float: left;
+}
+h1 {
+  font-size: larger;
+}
+a {
+  position: relative;
+  }
+nav{
+  font-size: 20px;
+  position: relative;
+    bottom:2vh;
+}
+nav ul li {
+display: inline;
+padding-left: 60px;
+
+}
+nav ul li a {
+text-decoration: none;
+color:black
+
+}
+ul li a::before {
+content: '';
+position: absolute;
+width: 100%;
+height: 3px;  
+border-radius: 2px;
+background-color: Black;
+bottom: 0;
+left: 0;
+transform-origin: right;
+transform: scaleX(0);
+transition: transform .3s ease-in-out;
+}
+a:hover::before {
+transform-origin: left;
+transform: scaleX(1);
+}
+ 
+div h2{
+  text-decoration: underline ;
+  text-align: center;
+}
+img {    
+        max-width: 100%;     
+    }
+
+    input{
+      border-radius: 25px;
+      border: black solid 0.5px;
+      line-height: 2em;
+      
+      
+      
+    }
+  
+      /* Home Page*/
+    #HomePage{
+        background: url(../MEDIA/HomeBackGround.JPG);
+        background-repeat: no-repeat;
+        background-size: cover;
+        height:auto;
+        width:auto;
+
+    }
+    #LetsGo{
+    width: 55%;
+    margin-top: 20px;
+    
+  }
+  
+  #LetsGoImg:hover {
+    width:80%;
+    margin-top: 20%;
+    margin-right: 20%;
+  }
+  .CloseWindow{
+    background-image: linear-gradient(160deg, red, white);
+    padding:0.2px 10px;
+  }
+  #Register:hover,#Login:hover{
+    background-color: var(--GreyButton);
+    cursor: pointer;
+   }
+    /* Home Grid */ 
+      
+#container
+{
+display: grid;
+grid-template-areas: 
+'Header Header Header Header LetsGo'
+'About About  RegisterPage RegisterPage  LoginPage';
+}
+.GridSettings{
+    border-style: solid;
+    border-radius: 25px;
+    margin: 40px;
+    background:var(--FormColor1);
+}
+#Header {
+    grid-area: Header;
+    height: auto;   
+    width: auto;
+    padding-top:3%;
+    
+}
+#About {
+    grid-area: About;
+    height: auto;
+    margin-top: 6em;
+    line-height: 1.5;
+    width: 90%; 
+    
+}
+#RegisterPage {
+  visibility: hidden;
+  grid-area: RegisterPage;
+  height: auto;
+  width:auto;
+  margin-top: 10em;
+}
+#LoginPage {
+  visibility: hidden;
+  grid-area: LoginPage;
+  height: auto;
+  width:auto;
+  margin-top: 12em;
+  
+}
+#Register,#Login{
+ width: 100%;
+}
+
+#StatPage{
+        background: url(../MEDIA/StatisticBackGround.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        height:100%;
+    }
+/* WORKOUT PAGE*/
+#WorkoutPage{
+    background: url(../MEDIA/WorkoutBackGround.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height:auto;
+}
+#containerWorkOut
+{
+display: grid;
+grid-template-areas: 
+'Header Header Header'
+'Grades StartStop Time '
+'Device Device Device'
+
+}
+/* Grid Workout*/
+#Grades {
+  grid-area: Grades;
+  text-align: center;
+  height: auto;
+  
+}
+#Time {
+  grid-area: Time;
+  height: auto;
+}
+#Device {
+ 
+  grid-area: Device;
+  height: 60vh;
+  background: url(../MEDIA/FingerBoardAlpineStylePic.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: rotate(0.6deg);
+}
+#StartStop {
+  grid-area: StartStop;
+  height: 10vh;
+  text-align:center;
+  height: auto;
+}
+.mainTime{
+font-size:80px;
+}
+/*Grades Styling*/
+.DiffGrades{
+  background-image: linear-gradient(160deg, Gray, white);
+  border: black 1px solid;
+  padding: 20px;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 50%;
+  width: 100px;
+  margin-right: 3%;
+  cursor: pointer;
+  
+}
+
+#StartStopButton,#LetsGoButton
+{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  border: 1px solid Black;
+  background-image: linear-gradient(30deg, lightgreen, white); 
+  cursor: pointer;
+}
+#LetsGoButton
+{
+  animation: Sizeup 2s 2s 5  ease-in-out;
+}
+#StartStopButton
+{
+  float: left;
+}
+#reset{
+  height: 40px;
+  width: 100px;
+  border-radius: 5%;
+  border: 1px solid Black;
+  background-image: linear-gradient(30deg, Yellow, white); 
+  position: relative;
+  cursor: pointer;
+}
+/*Stats Page*/
+#containerStat
+{
+display: grid;
+grid-template-areas: 
+'Header Header Header Header LetsGo'
+'Table Table . . Filters '
+'GraphCount GraphCount GraphResults GraphResults  Filters'
+'GraphCount GraphCount GraphResults GraphResults  Filters'
+;
+}
+
+/*Hidden form to send query to DB*/ 
+#RecordForm{
+  visibility: hidden;
+}
+
+/* Grid Stats*/
+
+#Table {
+  grid-area: Table;
+  height: auto;
+  width: auto;
+  position:relative;
+  left: 30%;
+}
+#Filters {
+  grid-area: Filters;
+  width: auto;
+  border: black solid 1px;
+  
+  height: auto;
+}
+#FilterLogo{
+  width:30%;
+  height: auto;
+  float: right;
+  transition: width 2s;
+}
+#FilterLogo:hover{
+  width:50%;
+}
+.input-group
+{
+  display:grid;
+  word-spacing: 12px;
+}
+#unified-inputs.input-group { width: 100%; }
+#unified-inputs.input-group input { width: 50%  }
+#unified-inputs.input-group input:last-of-type { border-left: 0; }
+#GraphCount {
+  grid-area: GraphCount;
+  height: auto;
+  text-align:center;
+  border: black solid 1px;
+  
+}
+#GraphResults {
+  grid-area: GraphResults;
+  height: auto;
+  width: auto;
+  border: black solid 1px;
+ 
+ 
+}
+/* Style Table*/
+
+.HistoryClimb {
+  border-collapse: collapse;
+  font-size: 0.9em;
+  min-width: auto;
+  height: auto;
+  box-shadow: 0 0 30px black;
+ 
+  
+  
+}
+.HistoryClimb thead tr {
+  background-color: green;
+  color: White;
+  text-align: left;
+}
+
+.HistoryClimb th,.HistoryClimb td {
+    padding: 12px 15px;
+}
+.HistoryClimb tbody tr {
+  border-bottom: 1px solid White;
+}
+
+.HistoryClimb tbody tr:nth-of-type(even) {
+  background-color: White;
+}
+
+.HistoryClimb tbody tr:last-of-type {
+  border-bottom: 2px solid green;
+}
+
+
+
+
+/*More*/
+
+@keyframes Sizeup {
+  0% { width: 100px;}
+  50% { width: 115px; height:115px; color: blue; font-size:20px;}
+  100% { width: 100px; }
+}
+
+@media screen and (max-width: 1000px) {
+  .GridSettings {
+    background:var(--FormColor2);
+  }
+}
+
+.Active {
+  border: blue 3px dotted; 
+  border-radius: 25px;
+}
+
+/*3 lines menu*/
+.menu > li {
+  margin: 0 1rem;
+  overflow: hidden;
+}
+
+.menu-button-container {
+  cursor: pointer;
+}
+
+#menu-toggle {
+  display: none;
+}
+
+.menu-button,
+.menu-button::before,
+.menu-button::after {
+  display: block;
+  background-color: black;
+  position: absolute;
+  height: 4px;
+  width: 30px;
+  transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
+  border-radius: 2px;
+}
+
+.menu-button::before {
+  content: '';
+  margin-top: -8px;
+}
+
+.menu-button::after {
+  content: '';
+  margin-top: 8px;
+}
+
+#menu-toggle:checked + .menu-button-container .menu-button::before {
+  margin-top: 0px;
+  transform: rotate(405deg);
+}
+
+#menu-toggle:checked + .menu-button-container .menu-button {
+  background: rgba(255, 255, 255, 0);
+}
+
+#menu-toggle:checked + .menu-button-container .menu-button::after {
+  margin-top: 0px;
+  transform: rotate(-405deg);
+}
+
+
+  .menu-button-container {
+    display: flex;
+  }
+  .menu {
+    position: absolute;
+    top: 0;
+    margin-top: 50px;
+    left: 0;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+  #menu-toggle ~ .menu li {
+    height: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width:20%;
+    transition: height 400ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  #menu-toggle:checked ~ .menu li {
+    border: 1px solid #333;
+    height: 2.5em;
+    padding: 0.5em;
+    width:20%;
+    transition: height 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    
+  }
+  .menu > li {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0.5em 0;
+    width: 100%;
+    color: black;
+    background-color: var(--FormColor1);
+    cursor: pointer;
+  }
+  

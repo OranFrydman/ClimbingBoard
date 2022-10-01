@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="StyleSheet" href="../static/Style1.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClimbingBoard - Training Rock Climbers Cummunity</title>
+    <script defer src="/static/JScodes.js"></script>
+</head>
+<body id="HomePage">
+    <h1>Wellcome to ClimbingBoard - Training application for Rock Climbers</h1>
+    <div id="container">
+        <div class="GridSettings" id="Header">
+                <nav>
+                    <ul class="HomeItems">
+                        <input id="menu-toggle" type="checkbox" />
+                        <label class='menu-button-container' for="menu-toggle">
+                        <div class='menu-button'></div>
+                      </label>
+                        <ul class="menu">
+                            <li><a  onclick="ShowDiv('LoginPage')">Sign in</a></li>
+                            <li><a  onclick="ShowDiv('RegisterPage')">Register</a></li>
+                            <li><a  onclick="ShowDiv('About')">About us</a></li>
+                        </ul>
+                        <li><span id="time"></span></li>
+                        <li><a href="HomePage.html">Home</a></li> 
+                        <li><a href="Workout.html">Workout</a></li> 
+                        <li><a id="go_to_stats" href="Statistics.html">My Climbs</a></li> 
+                    </ul>
+                </nav>
+        </div>
+        <div id="LetsGo">
+            <a href="Workout.html">
+                <button href="Workout.html" type="button" id="LetsGoButton">Lets Go</button> 
+            </a>
+        </div>
+        <div class="GridSettings" id="About">
+            <input type="button" class="CloseWindow" id="CloseRegis" onclick="HideDiv('About')" value="X"/>
+            <br>
+            <h2>Hello There!</h2>
+            <div>I am a student from Ben Gurion University with a passion for rock climbing </div>
+            <div>I have decided to take the HangBoard application one step forward and create my own endurance trainer.</div>
+            <div>This application was developed as part of a Web Development Course during the summer of 2022.</div>
+            <div>During the Covid19 pandemic climbing outdoors was not possible.</div>
+            <div>ClimbingBoard is an application which provides an unknown suprising and challanging in-home climbing. </div>
+        </div>
+        <div class="GridSettings" id="LoginPage">
+                <input type="button" class="CloseWindow" id="CloseRegis" onclick="HideDiv('LoginPage')" value="X"/>
+                    <div class="Forms"> 
+                        <h2>Login</h2>
+                        <form action="/Login" method="post">
+                            <label for="LoginUserEmail">Email</label>
+                            <input type="email" name="LoginUserEmail" id="LoginUserEmail">  <br>
+                            <label for="LoginPassword">Password</label>
+                            <input type="password" name="LoginPassword" id="LoginPassword">  <br><br><br>
+                            <input type="submit" id="Login" value="Login"/>  
+                        </form>
+                        <br><br><br>
+                    </div>
+        </div>
+        <div class="GridSettings" id="RegisterPage">
+            <input type="button" class="CloseWindow" id="CloseRegis" onclick="HideDiv('RegisterPage')" value="X"/>
+                <div class="Forms" >
+                    <div class="Register">
+                        <h2>Register</h2>
+                        <form action="/createNewClimber" method="post">
+                            <label for="FullName">Full Name</label>
+                            <input type="text" name="FullName" id="FullName">  <br>
+                            <label for="UserEmail">Email</label>
+                            <input type="email" name="UserEmail" id="UserEmail">  <br>
+                            <label for="Password">Password</label>
+                            <input type="password" name="Password" id="Password">  <br><br><br>
+                            <input type="submit" id="Register" value="Register"/> 
+                        </form>
+                        <br><br><br>
+                    </div>
+                </div>
+        </div>
+    </div>
+</body>
+
+</html>

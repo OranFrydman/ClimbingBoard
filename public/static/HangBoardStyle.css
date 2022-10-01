@@ -1,0 +1,217 @@
+/* this file includes all the graphic holds upon the Hangboard ,
+ because its a fairly massive code file i decided to set this apart on a different file 
+rather than include it with all the main pages styles.*/
+
+
+
+/*DeviceGrid*/
+#containerDevice
+{
+display:grid;
+max-width:  100%;
+position: relative;
+grid-template-areas: 
+'Air Air Air Air Air Air Air Air Air '
+'H1 H1 H2 H2 H3 H4 H5 H6 H6'
+'H1 H1 H2 H2 H7 H8 H5 H6 H6'
+'H9 H10 H11 H12 H13 H14 H15 H16 H17'
+' H18 H19 H20 H21 H22 H23 H24 H25 H26'
+;
+
+}
+.holds{
+    visibility: hidden;
+    
+}
+.OneFingersImg{
+    width: 80%;
+    background-color: black;
+}
+.TwoFingersImg{
+    width: 90%;
+    background-color: black;
+}
+.ThreeFingersImg{
+    width: 100%;
+    background-color: black;
+}
+.SmallSquareImg{
+    position: relative;
+    height: 150%;
+    width: 100%;
+    background-color: black;
+    
+   
+  }
+  .FiveFingersImg{
+    background-color: black;
+  }
+  .BigSquareImg
+  {
+    height:95%;
+    position: relative;
+    right: 5%;
+    background-color: black;
+  }
+/* Device Holds*/
+#H1,#H2,#H5,#H6{
+  height:17vh;
+}
+/*UpSlopes*/
+#H3,#H4
+{
+  height: 5vh;
+  width: 20vh;
+  
+}
+/*2nd and 3rd line*/
+#H9,#H10,#H11,#H12,#H13,#H14,#H15,#H16,#H17,#H18,#H19,#H20,#H21,#H22,#H23,#H23,#H24,#H25,#H26
+{
+  height: 15vh;
+
+}
+/*Mono*/
+#H10,#H16,#H19,#H25{width: 10vh;}
+
+/*TwoFingers*/
+#H11,#H12,#H14,#H15,#H20,#H21,#H23,#H24{ width: 20vh;}
+/*ThreeFingers*/
+#H7,#H8
+{
+  height: 12vh;
+  width: 20vh;
+}
+/*Big*/
+#H1,#H2,#H5,#H6,#H9,#H17,#H18,#H26{ width: 30vh;  }
+/*FiveFingers*/
+#H13,#H22{ width: 35vh;}
+#Air
+{ 
+  grid-area: Air;
+  height:9vh;
+}
+
+#H1 { 
+  margin-left: 20%;
+  grid-area: H1;
+}
+#H2 {
+  grid-area: H2;
+ 
+}
+#H3 {
+  grid-area: H3;
+  height:5vh;
+}
+#H4 {
+  grid-area: H4;
+  height:5vh;
+}
+#H5 {grid-area: H5;}
+#H6 {grid-area: H6;}
+#H7 {grid-area: H7;}
+#H8 {grid-area: H8;}
+#H9 {
+ grid-area: H9;
+ margin-left: 10%;
+}
+ 
+#H10 {
+  grid-area: H10;
+  margin-left: 30%;
+}
+#H11{
+  grid-area: H11;
+  margin-left: 10%;
+}
+#H12{
+  grid-area: H12;
+  margin-left: 5%;
+}
+#H13 {
+  grid-area: H13;
+  margin-left: 10%;
+}
+#H14 {
+  grid-area: H14;
+  margin-left: 30%;
+}
+
+#H15 {
+  grid-area: H15;
+  margin-left: 15%;
+}
+#H16 {grid-area: H16; }
+#H17 {grid-area: H17;}
+#H18 {
+  grid-area: H18;
+  margin-left: 20%;
+}
+#H19 {
+  grid-area: H19;
+  margin-left: 60%;
+}
+#H20 {
+  grid-area: H20;
+  margin-left: 20%;
+}
+#H21 {
+  grid-area: H21;
+  margin-left: 15%;
+}
+#H22 {
+  grid-area: H22;
+  margin-left: 10%;
+}
+#H23 {
+  grid-area: H23;
+  margin-left: 30%;
+}
+#H24 {
+  grid-area: H24;
+margin-left: 12%;
+}
+#H25 {grid-area: H25;}
+#H26 {grid-area: H26;}
+
+
+
+#Img16{
+  position: relative;
+  right:50%;
+  top:10%;
+}
+#Img25{
+  position: relative;
+  right:70%;
+  top:20%;
+}
+#Img10{
+  position: relative;
+  top:20%;
+}
+#Img19{
+  position: relative;
+  top:30%;
+  
+}
+#Img11,#Img12,#Img14,#Img15,#Img15,#Img20,#Img21,#Img23,#Img24{
+  position: relative;
+  top:20%;
+}
+#Img7,#Img8{
+  position: relative;
+  right:30%;
+  top:20%;
+}
+#Img3,#Img4{
+  position: relative;
+  right:25%;
+  
+}
+#Img17,#Img26{
+  position: relative;
+  right:17%;
+  
+}
+
