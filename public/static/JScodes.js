@@ -3,19 +3,19 @@ var time;
 var d = new Date();
 time=d.getHours();
 console.log(time)
+var greetings="";
 if(time<12.0)
 {
-    document.getElementById("time").innerHTML="Good Morning!";
+    greetings="Good Morning!";
 }
 else if(time<18){
-    document.getElementById("time").innerHTML="Good Afternoon!";
+    greetings="Good Afternoon!";
 }
 else
 {
-    document.getElementById("time").innerHTML="Good Evening!";
+    greetings="Good Evening!";
 }
-
-const ActivePage = window.location.pathname;
+document.getElementById("time").innerHTML=greetings;
 console.log(ActivePage);
 
 

@@ -1,6 +1,8 @@
 const sql = require('./db');
 var path = require('path');
 const e = require('express');
+const { appendFile } = require('fs');
+const MyServer = require('./server')
 
 
 
@@ -57,7 +59,6 @@ const Login = (req, res)=>{
         if (mysqlres.length > 0) 
         {
             console.log(mysqlres);
-            res.send(mysqlres);
             // Redirect to home page
             console.log("Youre logged in")
         }
