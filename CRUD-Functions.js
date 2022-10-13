@@ -59,8 +59,12 @@ const Login = (req, res)=>{
         if (mysqlres.length > 0) 
         {
             console.log(mysqlres);
+            
             // Redirect to home page
-            console.log("Youre logged in")
+            console.log("Youre logged in");
+            res.append('Set-Cookie', 'UserMail_C='+LoginInfo.email+'; Path=/; HttpOnly');
+            res.append('Set-Cookie', 'UserName_C='+mysqlres[0].name+'; Path=/; HttpOnly');
+            res.status(200).send({message: "Login Successful"});
         }
        
         else 
@@ -109,6 +113,7 @@ const Login = (req, res)=>{
             }
             return;
          } )
+         
         };
 
 module.exports = {createNewClimber,Login,createNewRecords,PullStats};

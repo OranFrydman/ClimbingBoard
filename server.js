@@ -7,26 +7,35 @@ const sql = require('./db');
 const connection = require('./db');
 const CRUD = require("./CRUD-functions"); 
 const { send } = require('process');
+const cookieParser = require('cookie-parser')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true
 }));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
+app.set('view engine', 'pug');
 //routings
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/',(req, res)=>{
-   res.redirect('HomePage');
+   res.render('HomePage');
 });
 app.get('/HomePage',(req, res)=>{
-   res.render('HomePage',{title: 'Home'})
+   if (req.get("Cookie"))
+   {
+      var session = req.get("Cookie");
+      console.log("Session is +"+session)
+      var splitSession = session.split("=",";");
+      var email = splitSession[1];
+      console.log(email);
+   }
+   res.render('HomePage.html',{title: 'Home',})
+   
 });
 app.get('/Workout',(req, res)=>{
-   res.render('Workout',{title: 'Workout Session'})
+   res.render('Workout.html',{title: 'Workout Session'})
 });
 app.get('/statistics',(req, res)=>{
-   res.render('statistics',{title: 'Results'})
+   res.render('statistics.html',{title: 'Results'})
 });
 
 app.post("/createNewClimber", CRUD.createNewClimber);
@@ -34,23 +43,7 @@ app.post("/Login", CRUD.Login);
 app.post("/createNewRecords", CRUD.createNewRecords);
 
 
-// simple route
-/*
-// Create a route for getting all customers
-app.get('/customers',(req,res)=>{
- sql.query("SELECT * from customers",(err,mysqlres)=>{
-    if (err)
-     {
-        console.log(err+"Error");
-        res.status(400).send("Couldnt get the info");
-        return;
-     }
-    console.log("got all customers");
-    res.send(mysqlres);
-    return;
- })
-});
-*/
+
     app.listen(port,()=>{
         console.log("Server is running on port"+port)
     });
