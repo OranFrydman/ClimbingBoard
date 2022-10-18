@@ -1,0 +1,89 @@
+doctype html
+head
+  link(rel='StyleSheet' href='../static/Style1.css')
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title ClimbingBoard  
+  script(defer='' src='/static/JScodes.js')
+body#HomePage
+    h1#welcome= user 
+    #container
+      #Header.GridSettings
+        nav
+          ul.HomeItems
+            input#menu-toggle(type='checkbox')
+            label.menu-button-container(for='menu-toggle')
+              .menu-button
+            ul.menu
+              li
+                a(onclick="ShowDiv('LoginPage')") Sign in
+              li
+                a(onclick="ShowDiv('RegisterPage')") Register
+              li
+                a(onclick="ShowDiv('About')") Instructions
+            li
+              span#time
+            li
+              a(href="http://localhost:8080/HomePage") Home
+            |  
+            li
+              a(href="http://localhost:8080/Workout") Workout
+            |  
+            li
+              a#go_to_stats(href='http://localhost:8080/Statistics') My Climbs
+            
+             
+      #LetsGo
+        a(href='http://localhost:8080/Workout')
+          button#LetsGoButton(href='http://localhost:8080/Workout', type='button') Lets Go
+      #About.GridSettings
+        input#CloseRegis.CloseWindow(type='button', onclick="HideDiv('About')", value='X')
+        br
+        h2 Hello There!
+        div ClimbingBoard is an application which provides an unknown suprising and challanging in-home climbing. 
+        div
+          | The goal is to reach muscle pump and to challange your endruance rather than max finger strength
+        div
+          | Grab a box or a chair and place it infront of your hangboard device
+        div place the laptop on the chair and make sure you leave room for your feet to be on it too. 
+        div
+          | When starting the session place your feet on the chair/box as if your climbing on negative slope.
+      #LoginPage.GridSettings
+        input#CloseRegis.CloseWindow(type='button', onclick="HideDiv('LoginPage')", value='X')
+        .Forms
+          h2 Login
+          form(action='/Login', method='post')
+            label(for='LoginUserEmail') Email
+            input#LoginUserEmail(type='email', name='LoginUserEmail' required)
+            br
+            label(for='LoginPassword') Password
+            input#LoginPassword(type='password', name='LoginPassword' required)
+            br
+            br
+            br
+            input#Login(type='submit', value='Login')
+          br
+          br
+          br
+      #RegisterPage.GridSettings
+        input#CloseRegis.CloseWindow(type='button', onclick="HideDiv('RegisterPage')", value='X')
+        .Forms
+          .Register
+            h2 Register
+            form(action='/createNewClimber', method='post')
+              label(for='FullName') Full Name
+              input#FullName(type='text', name='FullName' required)
+              br
+              label(for='UserEmail') Email
+              input#UserEmail(type='email', name='UserEmail' required)
+              br
+              label(for='Password') Password
+              input#Password(type='password', name='Password' required)
+              br
+              br
+              br
+              input#Register(type='submit', value='Register')
+            br
+            br
+            br

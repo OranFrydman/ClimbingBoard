@@ -68,20 +68,16 @@ document.getElementById('StartStopButton').addEventListener('click', ()=>
             SSclicked=1;
             btn.textContent='Stop Climbing';
             btn.style.background="pink";
-            window.localStorage.setItem('ChosenLevel',level);
             StartAlgo();
             
         }
         else
         {
-  
-            
             SSclicked=0;
             document.getElementById("ChosenLevel").value=level;
             document.getElementById("TimeStamp").value=buildDuration(minute,second);
             ClearClock();
             document.getElementById('RecordQuery').click();
-            //Later on send details to DataBase for statistics results
         }
     }
     else

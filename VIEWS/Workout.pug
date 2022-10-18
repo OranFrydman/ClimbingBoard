@@ -1,0 +1,102 @@
+doctype html
+html(lang='en')
+  head
+    link(rel='StyleSheet', href='/static/Style1.css')
+    link(rel='StyleSheet', href='/static/HangBoardStyle.css')
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title ClimbingBoard
+    script(defer='', src='/static/JScodes.js')
+    script(defer='', src='/static/HangBoardAlgorithm.js')
+  body#WorkoutPage
+    h1#welcome= user 
+    .HangBoard
+      #containerWorkOut
+        #Header.GridSettings
+          .hero
+            nav
+              ul.WorkoutItems
+                span#time
+                li
+                  a(href='http://localhost:8080/HomePage') Home
+                |  
+                li
+                  a(href="http://localhost:8080/Workout") Workout
+                |  
+                li
+                  a#go_to_stats(href='http://localhost:8080/statistics') My Climbs
+        #Grades
+          button#Easy.DiffGrades   Easy  
+          button#Medium.DiffGrades Medium
+          button#Hard.DiffGrades   Hard 
+        #Time
+          #mainstopwatch
+            .mainTime
+              span#mainminute 00
+              span#mainsecond 00
+        #Device
+          #containerDevice
+            #Air.holds
+            #H1.holds
+              img#Img1.BigSquareImg(src='/MEDIA/Square1.jpg', alt='H1')
+            #H2.holds
+              img#Img2.BigSquareImg(src='/MEDIA/Square1.jpg', alt='H2')
+            #H3.holds
+              img#Img3.SmallSquareImg(src='/MEDIA/Square1.jpg', alt='H3')
+            #H4.holds
+              img#Img4.SmallSquareImg(src='/MEDIA/Square1.jpg', alt='H4')
+            #H5.holds
+              img#Img5.BigSquareImg(src='/MEDIA/Square1.jpg', alt='H5')
+            #H6.holds
+              img#Img6.BigSquareImg(src='/MEDIA/Square1.jpg', alt='H6')
+            #H7.holds
+              img#Img7.ThreeFingersImg(src='/MEDIA/2FingersHold.jpg', alt='H7')
+            #H8.holds
+              img#Img8.ThreeFingersImg(src='/MEDIA/2FingersHold.jpg', alt='H8')
+            #H9.holds
+              img#Img9.ThreeFingersImg(src='/MEDIA/34FingersHold.jpg', alt='H9')
+            #H10.holds
+              img#Img10.OneFingersImg(src='/MEDIA/Mono.jpg', alt='H10')
+            #H11.holds
+              img#Img11.TwoFingersImg(src='/MEDIA/2FingersHold.jpg', alt='H11')
+            #H12.holds
+              img#Img12.TwoFingersImg(src='/MEDIA/2FingersHold.jpg', alt='H12')
+            #H13.holds
+              img#Img13.FiveFingersImg(src='/MEDIA/34FingersHold.jpg', alt='H3')
+            #H14.holds
+              img#Img14.TwoFingersImg(src='/MEDIA/2FingersHold.jpg', alt='H14')
+            #H15.holds
+              img#Img15.TwoFingersImg(src='/MEDIA/2FingersHold.jpg', alt='H15')
+            #H16.holds
+              img#Img16.OneFingersImg(src='/MEDIA/Mono.jpg', alt='H16')
+            #H17.holds
+              img#Img17.ThreeFingersImg(src='/MEDIA/34FingersHold.jpg', alt='H17')
+            #H18.holds
+              img#Img18.ThreeFingersImg(src='/MEDIA/34FingersHold.jpg', alt='H18')
+            #H19.holds
+              img#Img19.OneFingersImg(src='/MEDIA/Mono.jpg', alt='H19')
+            #H20.holds
+              img#Img20.TwoFingersImg(src='/MEDIA/2FingersHold.jpg', alt='H20')
+            #H21.holds
+              img#Img21.TwoFingersImg(src='/MEDIA/2FingersHold.jpg', alt='H21')
+            #H22.holds
+              img#Img22.FiveFingersImg(src='/MEDIA/34FingersHold.jpg', alt='H22')
+            #H23.holds
+              img#Img23.TwoFingersImg(src='/MEDIA/2FingersHold.jpg', alt='H23')
+            #H24.holds
+              img#Img24.TwoFingersImg(src='/MEDIA/2FingersHold.jpg', alt='H24')
+            #H25.holds
+              img#Img25.OneFingersImg(src='/MEDIA/Mono.jpg', alt='H25')
+            #H26.holds
+              img#Img26.ThreeFingersImg(src='/MEDIA/34FingersHold.jpg', alt='H26')
+        #StartStop
+          button#StartStopButton(type='button') Start Climbing
+          |  
+          button#reset(type='button')  Reset Clock 
+    form#RecordForm(action='/createNewRecords', method='post')
+      input#ChosenLevel(type='text', name='ChosenLevel')
+      br
+      input#TimeStamp(type='text', name='TimeStamp')
+      br
+      input#RecordQuery(type='submit', value='SendQuery')

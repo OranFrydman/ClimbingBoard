@@ -6,7 +6,9 @@
   
 }
 
-
+#welcome{
+  text-align:center;
+}
 :root{
     --FormColor1:rgba(237,184,121,0.8);
     --FormColor2:rgba(189, 27, 243, 0.8);
@@ -171,8 +173,7 @@ display: grid;
 grid-template-areas: 
 'Header Header Header'
 'Grades StartStop Time '
-'Device Device Device'
-
+'Device Device Device';
 }
 /* Grid Workout*/
 #Grades {
@@ -186,13 +187,13 @@ grid-template-areas:
   height: auto;
 }
 #Device {
- 
   grid-area: Device;
   height: 60vh;
   background: url(../MEDIA/FingerBoardAlpineStylePic.png);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100%;
   transform: rotate(0.6deg);
+  
 }
 #StartStop {
   grid-area: StartStop;
@@ -243,44 +244,48 @@ font-size:80px;
   position: relative;
   cursor: pointer;
 }
+/*Hidden form to send query to DB*/ 
+#RecordForm{
+  visibility: hidden;
+}
 /*Stats Page*/
 #containerStat
 {
 display: grid;
 grid-template-areas: 
 'Header Header Header Header LetsGo'
-'Table Table . . Filters '
-'GraphCount GraphCount GraphResults GraphResults  Filters'
-'GraphCount GraphCount GraphResults GraphResults  Filters'
-;
+'Table Table Table Table Filters '
+'Notice Notice Notice Notice Notice';
+padding:10px;
 }
 
-/*Hidden form to send query to DB*/ 
-#RecordForm{
-  visibility: hidden;
-}
 
 /* Grid Stats*/
 
 #Table {
   grid-area: Table;
   height: auto;
-  width: auto;
-  position:relative;
-  left: 30%;
+  
 }
 #Filters {
+  border: 1px solid black;
   grid-area: Filters;
   width: auto;
   border: black solid 1px;
   
   height: auto;
 }
+#Notice{
+  grid-area: Notice;
+  border: black solid 1px;
+}
 #FilterLogo{
   width:30%;
   height: auto;
   float: right;
   transition: width 2s;
+ 
+  
 }
 #FilterLogo:hover{
   width:50%;
@@ -293,37 +298,26 @@ grid-template-areas:
 #unified-inputs.input-group { width: 100%; }
 #unified-inputs.input-group input { width: 50%  }
 #unified-inputs.input-group input:last-of-type { border-left: 0; }
-#GraphCount {
-  grid-area: GraphCount;
-  height: auto;
-  text-align:center;
-  border: black solid 1px;
-  
-}
-#GraphResults {
-  grid-area: GraphResults;
-  height: auto;
-  width: auto;
-  border: black solid 1px;
- 
- 
-}
 /* Style Table*/
 
 .HistoryClimb {
   border-collapse: collapse;
   font-size: 0.9em;
-  min-width: auto;
-  height: auto;
+  width: auto;
+  height: 400px;
   box-shadow: 0 0 30px black;
- 
-  
-  
+  overflow: scroll;
+  display:inline-block;
+  position:relative;
+  left :10%;
 }
+
 .HistoryClimb thead tr {
   background-color: green;
   color: White;
   text-align: left;
+  position: sticky;
+  top: 0;
 }
 
 .HistoryClimb th,.HistoryClimb td {
@@ -340,8 +334,6 @@ grid-template-areas:
 .HistoryClimb tbody tr:last-of-type {
   border-bottom: 2px solid green;
 }
-
-
 
 
 /*More*/
@@ -454,3 +446,16 @@ grid-template-areas:
     cursor: pointer;
   }
   
+
+
+  /* Crush View */
+  #CrushView{
+    background: url(../MEDIA/ToddyTeam.JPG);
+    background-repeat: no-repeat;
+    background-size: 70vw;
+    height:auto;
+    width:40vw;
+    text-align:center;
+    color:white;
+    -webkit-text-stroke: 0.5px black;
+  }
