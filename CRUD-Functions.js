@@ -1,9 +1,6 @@
 const sql = require('./db');
 var path = require('path');
-const e = require('express');
-const { appendFile } = require('fs');
 const MyServer = require('./server.js');
-const { Console } = require('console');
 
 
 
@@ -113,7 +110,7 @@ const Login = (req, res)=>{
                 
                 return;
             }
-            console.log(data);
+   
             console.log("pulling stats..success");
             res.render('statistics',{
                 myclimbs:data,
@@ -145,8 +142,6 @@ const Login = (req, res)=>{
             {
                 QueryFilter.DateFinish="2099-05-14"
             }
-            console.log(QueryFilter)
-            console.log(QueryFilter.EasyFilter)
             let EmailQuery = GetUser(req,res,"email")
             sql.query("SELECT ROW_NUMBER() OVER(ORDER BY (Select 0)) as num , DATE_FORMAT(date,'%Y/%m/%d - %H:%i:%S') as date,duration,level FROM stats WHERE email=? and level IN (?,?,?) and date between ? and ?",
                [EmailQuery,
@@ -171,6 +166,22 @@ const Login = (req, res)=>{
             
            };
 
+           const DeleteUser = (req, res)=>{
+            let EmailQuery = GetUser(req,res,"email")
+            if(EmailQuery == "Guest@Guest.Guest")
+            {
+                res.render('CrushView',{GetMsg: "You're Not logged in "});
+                return;
+            }
+            
+            sql.query("DELETE FROM stats WHERE email=?",EmailQuery, (err, data)=>{
+               if (err) {  
+                res.render('CrushView',{GetMsg: "We couldnt delete this account's climb "+err});
+               }
+               res.render('CrushView',{GetMsg: "All Climbs deleted successfully"});
+            });
+           };
+
 
         function GetUser(req,res,field){
             if (req.get("Cookie"))
@@ -180,17 +191,10 @@ const Login = (req, res)=>{
                var splitSession = session.split(/=|;/);
                var email = splitSession[1];
                var username = splitSession[3];
-               console.log(email);
-               console.log(username);
                if(field =="email") return email;
-               if(field=="name") return username;
-               
+               if(field=="name") return username; 
             }
             if(field =="email") return "Guest@Guest.Guest";
             if(field=="name") return "Guest";
-            
            };
-
-
-
-module.exports = {createNewClimber,Login,createNewRecords,PullStats,PullFilters};
+module.exports = {createNewClimber,Login,createNewRecords,PullStats,PullFilters,DeleteUser};

@@ -22,6 +22,8 @@ body#HomePage
                 a(onclick="ShowDiv('RegisterPage')") Register
               li
                 a(onclick="ShowDiv('About')") Instructions
+              li
+                a(href="http://localhost:8080/Delete") Delete all my climbs
             li
               span#time
             li
@@ -40,7 +42,7 @@ body#HomePage
       #About.GridSettings
         input#CloseRegis.CloseWindow(type='button', onclick="HideDiv('About')", value='X')
         br
-        h2 Hello There!
+        h2 Instructions
         div ClimbingBoard is an application which provides an unknown suprising and challanging in-home climbing. 
         div
           | The goal is to reach muscle pump and to challange your endruance rather than max finger strength

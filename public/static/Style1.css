@@ -283,12 +283,12 @@ padding:10px;
   width:30%;
   height: auto;
   float: right;
-  transition: width 2s;
+  transition: width 0.5s;
  
   
 }
 #FilterLogo:hover{
-  width:50%;
+  width:40%;
 }
 .input-group
 {
@@ -304,7 +304,7 @@ padding:10px;
   border-collapse: collapse;
   font-size: 0.9em;
   width: auto;
-  height: 400px;
+  max-height: 400px;
   box-shadow: 0 0 30px black;
   overflow: scroll;
   display:inline-block;
@@ -452,7 +452,7 @@ padding:10px;
   #CrushView{
     background: url(../MEDIA/ToddyTeam.JPG);
     background-repeat: no-repeat;
-    background-size: 70vw;
+    background-size: 40vw;
     height:auto;
     width:40vw;
     text-align:center;

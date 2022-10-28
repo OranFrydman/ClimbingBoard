@@ -1,13 +1,11 @@
 const path = require('path');
 const express = require("express");
 const bodyParser = require("body-parser");
-
 const app = express();
 const port=8080;
 const CRUD = require("./CRUD-functions");
 const sql = require('./db');
 const connection = require('./db');
-const { send } = require('process');
 const cookieParser = require('cookie-parser')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true
@@ -28,11 +26,13 @@ app.get('/HomePage',(req, res)=>{
    res.render('HomePage',{user: "Welcome, "+GetUser(req,res,"name")});
 });
 app.get('/Statistics',CRUD.PullStats);
-
+app.get("/Delete", CRUD.DeleteUser);
 app.post("/createNewClimber", CRUD.createNewClimber);
 app.post("/Login", CRUD.Login);
 app.post("/createNewRecords", CRUD.createNewRecords);
 app.post("/FilterStats", CRUD.PullFilters);
+
+
     app.listen(port,()=>{
         console.log("Server is running on port"+port)
     });
@@ -54,5 +54,5 @@ app.post("/FilterStats", CRUD.PullFilters);
       if(field=="name") return "Guest";
       
      };
-     module.exports = {GetUser};
+
    
