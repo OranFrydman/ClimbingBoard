@@ -4,9 +4,29 @@ const bodyParser = require("body-parser");
 const app = express();
 const port=8080;
 const CRUD = require("./CRUD-functions");
-const sql = require('./db');
-const connection = require('./db');
-const cookieParser = require('cookie-parser')
+const sql = require('./db/db');
+const cookieParser = require('cookie-parser');
+const CreateDB = require('./db/CreateDB');
+const fs = require('fs');
+const stringify = require('csv-stringify').stringify;
+const { parse } = require("csv-parse");
+const CSVToJSON = require('csvtojson');
+
+
+app.get('/CreateTable_Users',CreateDB.CreateTable_Users);
+app.get('/CreateTable_Stats',CreateDB.CreateTable_Stats);
+
+app.get("/InsertData_Users", CreateDB.InsertData_Users);
+app.get("/InsertData_Stats", CreateDB.InsertData_Stats);
+
+app.get('/ShowTable_Users', CreateDB.ShowTable_Users);
+app.get('/ShowTable_Stats', CreateDB.ShowTable_Stats);
+
+app.get('/DropTable_Users', CreateDB.DropTable_Users);
+app.get('/DropTable_Stats', CreateDB.DropTable_Stats);
+
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true
 }));

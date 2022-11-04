@@ -1,0 +1,4 @@
+email,name,password
+all@gmail.com,All,my_all_password
+bar@gmail.com,Bar,my_bar_password
+Guest@Guest.Guest,NoOneTakeThisEmail,SecretPassword

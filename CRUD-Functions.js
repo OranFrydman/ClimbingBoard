@@ -1,4 +1,4 @@
-const sql = require('./db');
+const sql = require('./db/db');
 var path = require('path');
 const MyServer = require('./server.js');
 

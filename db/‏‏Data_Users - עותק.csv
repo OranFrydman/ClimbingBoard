@@ -1,0 +1,16 @@
+email,date,time,level
+all@gmail.com,2022/06/19 00:00:00,04:22,easy
+bar@gmail.com,2022/06/20 00:00:00,04:23,easy
+Guest@Guest.Guest,2022/06/21 00:00:00,04:24,easy
+Guest@Guest.Guest,2022/06/22 00:00:00,04:25,easy
+Guest@Guest.Guest,2022/06/23 00:00:00,04:26,medium
+Guest@Guest.Guest,2022/06/24 00:00:00,04:27,hard
+bar@gmail.com,2022/06/25 00:00:00,04:28,hard
+bar@gmail.com,2022/06/26 00:00:00,04:29,hard
+bar@gmail.com,2022/06/27 00:00:00,04:30,medium
+bar@gmail.com,2022/06/28 00:00:00,04:31,medium
+all@gmail.com,2022/06/29 00:00:00,04:32,hard
+all@gmail.com,2022/06/30 00:00:00,04:33,hard
+all@gmail.com,2022/07/01 00:00:00,04:34,medium
+all@gmail.com,2022/07/02 00:00:00,04:35,medium
+all@gmail.com,2022/07/03 00:00:00,04:36,medium

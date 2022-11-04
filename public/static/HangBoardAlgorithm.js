@@ -122,7 +122,6 @@ function mainTime()
 // change hold every X seconds 
     if(second%4==0)
     {
-        
         ChangeHold();
     }
 }
