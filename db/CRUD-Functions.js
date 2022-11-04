@@ -1,6 +1,5 @@
-const sql = require('./db/db');
+const sql = require('./db');
 var path = require('path');
-const MyServer = require('./server.js');
 
 
 
@@ -28,7 +27,7 @@ const createNewClimber = (req, res)=>{
                         return;
                     }
                     console.log("New climber created");
-                    res.render('HomePage');
+                    res.render('CrushView',{GetMsg: "Welcome! We are so happy you decided to join us =] go back home, sign in and begin your workout progress"});
                     return;
                 } )
             }
