@@ -123,7 +123,7 @@ grid-template-areas:
 #Header {
     grid-area: Header;
     height: auto;   
-    width: auto;
+    width: 100%;
     padding-top:3%;
     
 }
@@ -175,7 +175,7 @@ grid-template-areas:
 'Header Header Header'
 'Grades StartStop Time '
 'Device Device Device';
-border: 5px solid red;
+
 }
 /* Grid Workout*/
 #Grades {
@@ -190,14 +190,15 @@ border: 5px solid red;
   height: auto;
 }
 #Device {
-  
+  border: 5px solid red;
   grid-area: Device;
-  /*width: 100%;
-  background-image: url(../MEDIA/FingerBoardAlpineStylePic.png);*/
+  width: 80%;
+  background-image: url(../MEDIA/FingerBoardAlpineStylePic.png);
   height: 60vh;
-  background: url(../MEDIA/FingerBoardAlpineStylePic.png);
+ /* background: url(../MEDIA/FingerBoardAlpineStylePic.png);*/
+ background-size: 100%; 
   background-repeat: no-repeat;
-  background-size: 100%;
+  
   transform: rotate(0.6deg);
   
   

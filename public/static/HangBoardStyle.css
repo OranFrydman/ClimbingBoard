@@ -18,167 +18,65 @@ grid-template-areas:
 'H9 H10 H11 H12 H13 H14 H15 H16 H17'
 ' H18 H19 H20 H21 H22 H23 H24 H25 H26'
 ;
-
 }
 .holds{
-    visibility: hidden;
-    /*border: 5px solid blue;*/
-    
-    
-    
+  border: 1px solid blue;
+  
+    /*
+    visibility: hidden;*/
 }
-.OneFingersImg{
-    width: 80%;
-    background-color: black;
+.FirstLine {
+  background-color: black;
 }
-.TwoFingersImg{
-    width: 90%;
-    background-color: black;
+.holds img {
+  
 }
-.ThreeFingersImg{
-    width: 100%;
-    background-color: black;
+.OneFingersImg{  
+}
+.TwoFingersImg{   
+}
+.ThreeFingersImg{    
 }
 .SmallSquareImg{
-    position: relative;
-    height: 150%;
-    width: 100%;
-    background-color: black;
-    
-   
-  }
-  .FiveFingersImg{
-    background-color: black;
-  }
-  .BigSquareImg
-  {
-    height:95%;
-    position: relative;
-    right: 5%;
-    background-color: black;
-  }
-/* Device Holds*/
+}
+.FiveFingersImg{   
+}
+.BigSquareImg
+{   
+}
+/* Device Holds
+
 #H1,#H2,#H5,#H6{
   height:17vh;
 }
-/*UpSlopes*/
+UpSlopes
 #H3,#H4
 {
   height: 5vh;
   width: 20vh;
   
 }
-/*2nd and 3rd line*/
+2nd and 3rd line
 #H9,#H10,#H11,#H12,#H13,#H14,#H15,#H16,#H17,#H18,#H19,#H20,#H21,#H22,#H23,#H23,#H24,#H25,#H26
 {
   height: 15vh;
 
 }
-/*Mono*/
+Mono
 #H10,#H16,#H19,#H25{width: 10vh;}
 
-/*TwoFingers*/
+TwoFingers
 #H11,#H12,#H14,#H15,#H20,#H21,#H23,#H24{ width: 20vh;}
-/*ThreeFingers*/
+ThreeFingers
 #H7,#H8
 {
   height: 12vh;
   width: 20vh;
 }
-/*Big*/
+Big
 #H1,#H2,#H5,#H6,#H9,#H17,#H18,#H26{ width: 30vh;  }
-/*FiveFingers*/
+FiveFingers
 #H13,#H22{ width: 35vh;}
-#Air
-{ 
-  grid-area: Air;
-  height:9vh;
-}
-
-#H1 { 
-  margin-left: 20%;
-  grid-area: H1;
-}
-#H2 {
-  grid-area: H2;
- 
-}
-#H3 {
-  grid-area: H3;
-  height:5vh;
-}
-#H4 {
-  grid-area: H4;
-  height:5vh;
-}
-#H5 {grid-area: H5;}
-#H6 {grid-area: H6;}
-#H7 {grid-area: H7;}
-#H8 {grid-area: H8;}
-#H9 {
- grid-area: H9;
- margin-left: 10%;
-}
- 
-#H10 {
-  grid-area: H10;
-  margin-left: 30%;
-}
-#H11{
-  grid-area: H11;
-  margin-left: 10%;
-}
-#H12{
-  grid-area: H12;
-  margin-left: 5%;
-}
-#H13 {
-  grid-area: H13;
-  margin-left: 10%;
-}
-#H14 {
-  grid-area: H14;
-  margin-left: 30%;
-}
-
-#H15 {
-  grid-area: H15;
-  margin-left: 15%;
-}
-#H16 {grid-area: H16; }
-#H17 {grid-area: H17;}
-#H18 {
-  grid-area: H18;
-  margin-left: 20%;
-}
-#H19 {
-  grid-area: H19;
-  margin-left: 60%;
-}
-#H20 {
-  grid-area: H20;
-  margin-left: 20%;
-}
-#H21 {
-  grid-area: H21;
-  margin-left: 15%;
-}
-#H22 {
-  grid-area: H22;
-  margin-left: 10%;
-}
-#H23 {
-  grid-area: H23;
-  margin-left: 30%;
-}
-#H24 {
-  grid-area: H24;
-margin-left: 12%;
-}
-#H25 {grid-area: H25;}
-#H26 {grid-area: H26;}
-
-
 
 #Img16{
   position: relative;
@@ -217,5 +115,40 @@ margin-left: 12%;
   position: relative;
   right:17%;
   
+}*/
+
+#Air
+{
+   grid-area: Air;
+   height: 6vh;
 }
+
+#H1  {grid-area: H1;}
+#H2  {grid-area: H2;}
+#H3  {grid-area: H3;}
+#H4  {grid-area: H4;}
+#H5  {grid-area: H5;}
+#H6  {grid-area: H6;}
+#H7  {grid-area: H7;}
+#H8  {grid-area: H8;}
+#H9  {grid-area: H9;}
+#H10 {grid-area: H10;}
+#H11 {grid-area: H11;}
+#H12 {grid-area: H12;}
+#H13 {grid-area: H13;}
+#H14 {grid-area: H14;}
+#H15 {grid-area: H15;}
+#H16 {grid-area: H16;}
+#H17 {grid-area: H17;}
+#H18 {grid-area: H18;}
+#H19 {grid-area: H19;}
+#H20 {grid-area: H20;}
+#H21 {grid-area: H21;}
+#H22 {grid-area: H22;}
+#H23 {grid-area: H23;}
+#H24 {grid-area: H24;}
+#H25 {grid-area: H25;}
+#H26 {grid-area: H26;}
+
+
 
