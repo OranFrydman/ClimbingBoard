@@ -74,7 +74,7 @@ const DropTable_Users = (req, res)=>{
     })
 }
 const CreateTable_Stats = (req,res)=>{
-    var Q5 = "CREATE TABLE stats (email VARCHAR(255) NOT NULL ,date DATETIME NOT NULL PRIMARY KEY ,duration TIME NOT NULL, level VARCHAR(255) NOT NULL)";
+    var Q5 = "CREATE TABLE stats (email VARCHAR(255) NOT NULL ,date DATETIME NOT NULL  ,duration TIME NOT NULL, level VARCHAR(255) NOT NULL,PRIMARY KEY(email,date))";
     SQL.query(Q5,(err,mySQLres)=>{
         if (err) {
             console.log("error ", err);

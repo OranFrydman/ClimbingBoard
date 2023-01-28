@@ -7,6 +7,7 @@ rather than include it with all the main pages styles.*/
 /*DeviceGrid*/
 #containerDevice
 {
+  
 display:grid;
 max-width:  100%;
 position: relative;
@@ -21,6 +22,9 @@ grid-template-areas:
 }
 .holds{
     visibility: hidden;
+    /*border: 5px solid blue;*/
+    
+    
     
 }
 .OneFingersImg{

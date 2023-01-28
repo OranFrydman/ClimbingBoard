@@ -166,6 +166,7 @@ grid-template-areas:
     background-repeat: no-repeat;
     background-size: cover;
     height:auto;
+    
 }
 #containerWorkOut
 {
@@ -174,6 +175,7 @@ grid-template-areas:
 'Header Header Header'
 'Grades StartStop Time '
 'Device Device Device';
+border: 5px solid red;
 }
 /* Grid Workout*/
 #Grades {
@@ -181,18 +183,23 @@ grid-template-areas:
   text-align: center;
   height: auto;
   
+  
 }
 #Time {
   grid-area: Time;
   height: auto;
 }
 #Device {
+  
   grid-area: Device;
+  /*width: 100%;
+  background-image: url(../MEDIA/FingerBoardAlpineStylePic.png);*/
   height: 60vh;
   background: url(../MEDIA/FingerBoardAlpineStylePic.png);
   background-repeat: no-repeat;
   background-size: 100%;
   transform: rotate(0.6deg);
+  
   
 }
 #StartStop {
@@ -216,10 +223,12 @@ font-size:80px;
   margin-right: 3%;
   cursor: pointer;
   
+  
 }
 
 #StartStopButton,#LetsGoButton
 {
+  
   height: 100px;
   width: 100px;
   border-radius: 50%;

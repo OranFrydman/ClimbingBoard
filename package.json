@@ -27,5 +27,13 @@
   "devDependencies": {
     "localstorage-polyfill": "^1.0.1",
     "nodemon": "^2.0.20"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OranFrydman/web_project_c_313264673.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OranFrydman/web_project_c_313264673/issues"
+  },
+  "homepage": "https://github.com/OranFrydman/web_project_c_313264673#readme"
 }
