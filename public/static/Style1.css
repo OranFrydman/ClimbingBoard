@@ -73,8 +73,6 @@ img {
       border: black solid 0.5px;
       line-height: 2em;
       
-      
-      
     }
   
       /* Home Page*/
@@ -174,8 +172,7 @@ display: grid;
 grid-template-areas: 
 'Header Header Header'
 'Grades StartStop Time '
-'Device Device Device';
-border: 5px solid red;
+'Device Device Device'
 }
 /* Grid Workout*/
 #Grades {
@@ -190,14 +187,14 @@ border: 5px solid red;
   height: auto;
 }
 #Device {
-  
+
   grid-area: Device;
-  /*width: 100%;
-  background-image: url(../MEDIA/FingerBoardAlpineStylePic.png);*/
+  width: 100%;
+  background-image: url(../MEDIA/FingerBoardAlpineStylePic.png);
   height: 60vh;
-  background: url(../MEDIA/FingerBoardAlpineStylePic.png);
+ /* background: url(../MEDIA/FingerBoardAlpineStylePic.png);*/
+  background-size: 100%; 
   background-repeat: no-repeat;
-  background-size: 100%;
   transform: rotate(0.6deg);
   
   
