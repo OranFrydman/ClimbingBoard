@@ -6,7 +6,6 @@ const connection = mysql.createConnection({
      user: dbConfig.USER,
      password: dbConfig.PASSWORD,
      database: dbConfig.DB
-     
     });
     
 
@@ -15,6 +14,5 @@ const connection = mysql.createConnection({
     if (error) throw error;
     console.log("Successfully connected to the database.");
     });
-
     module.exports = connection;
     

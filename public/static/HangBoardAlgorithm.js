@@ -11,9 +11,7 @@ document.getElementById('Easy').addEventListener('click', ()=>
 if(SSclicked==0)
 {
     level=1;
-    easy_btn.style.background="lightgreen";
-    med_btn.style.background="";
-    hard_btn.style.background="";
+    ChangeBG(level)
 }
 
 });
@@ -22,9 +20,7 @@ document.getElementById('Medium').addEventListener('click', ()=>
 if(SSclicked==0)
 {
     level=2;
-    easy_btn.style.background="";
-    med_btn.style.background="lightgreen";
-    hard_btn.style.background="";
+    ChangeBG(level)
 }
 });
 document.getElementById('Hard').addEventListener('click', ()=>
@@ -32,13 +28,37 @@ document.getElementById('Hard').addEventListener('click', ()=>
 if(SSclicked==0)
 {
     level=3;
-    easy_btn.style.background="";
-    med_btn.style.background="";
-    hard_btn.style.background="lightgreen"
+    ChangeBG(level)
+
 }
 });
 
+function ChangeBG(level)
+{
+    easy_btn.style.background="";
+    med_btn.style.background="";
+    hard_btn.style.background="";
+    easy_btn.style.color=""
+    med_btn.style.color=""
+    hard_btn.style.color=""
+    if(level==1)
+    {
+        easy_btn.style.background="lightgreen";
+        easy_btn.style.color="black"
+    }
+    if(level==2)
+    {
+        med_btn.style.background="lightgreen";
+        med_btn.style.color="black"
+    }
+    if(level==3)
+    {
+        hard_btn.style.background="lightgreen";
+        hard_btn.style.color="black"
+    }
 
+    
+}
 
 
 //StopWatch for workout plan

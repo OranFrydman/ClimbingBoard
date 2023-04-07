@@ -1,3 +1,4 @@
+@import 'https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300';
 *
 {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;
@@ -109,7 +110,7 @@ img {
 {
 display: grid;
 grid-template-areas: 
-'Header Header Header Header LetsGo'
+'Header Header Header Header Header'
 'About About  RegisterPage RegisterPage  LoginPage';
 }
 .GridSettings{
@@ -120,6 +121,8 @@ grid-template-areas:
 }
 #Header {
     grid-area: Header;
+    justify-content: center;
+    align-items: center;
     height: auto;   
     width: auto;
     padding-top:3%;
@@ -170,21 +173,23 @@ grid-template-areas:
 {
 display: grid;
 grid-template-areas: 
-'Header Header Header'
-'Grades StartStop Time '
-'Device Device Device'
+'Header Header Header Header'
+'Grades Grades StartStop Time '
+'Device Device Device Device'
 }
 /* Grid Workout*/
+
 #Grades {
   grid-area: Grades;
   text-align: center;
   height: auto;
-  
-  
+  width: auto;
+
 }
 #Time {
   grid-area: Time;
   height: auto;
+  width: auto;
 }
 #Device {
 
@@ -196,6 +201,7 @@ grid-template-areas:
   background-size: 100%; 
   background-repeat: no-repeat;
   transform: rotate(0.6deg);
+
   
   
 }
@@ -204,12 +210,34 @@ grid-template-areas:
   height: 10vh;
   text-align:center;
   height: auto;
+  width:auto;
 }
 .mainTime{
 font-size:80px;
 }
 /*Grades Styling*/
-.DiffGrades{
+#Easy,#Medium,#Hard{
+  overflow: hidden;
+  margin: 2;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  font-family: 'Open Sans Condensed', sans-serif;
+  height: 33.33%;
+  width: 50%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #3C3C3C;
+}
+.btn {
+  line-height: 50px;
+  height: 50px;
+  text-align: center;
+  width: 250px;
+  cursor: pointer;
+}
+/*.DiffGrades{
   background-image: linear-gradient(160deg, Gray, white);
   border: black 1px solid;
   padding: 20px;
@@ -219,19 +247,77 @@ font-size:80px;
   width: 100px;
   margin-right: 3%;
   cursor: pointer;
-  
-  
 }
-
+*/
+.DiffGrades {
+  color: #FFF;
+  transition: all 0.5s;
+  position: relative; 
+}
+.DiffGrades span {
+  z-index: 2; 
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%; 
+}
+.DiffGrades::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: all 0.5s;
+  border: 1px solid rgba(255,255,255,0.2);
+  background-color: rgba(255,255,255,0.1);
+}
+.DiffGrades::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: all 0.5s;
+  border: 1px solid rgba(255,255,255,0.2);
+  background-color: rgba(255,255,255,0.1);
+}
+.DiffGrades:hover::before {
+  transform: rotate(-45deg);
+  background-color: rgba(255,255,255,0);
+}
+.DiffGrades:hover::after {
+  transform: rotate(45deg);
+  background-color: rgba(255,255,255,0);
+}
 #StartStopButton,#LetsGoButton
 {
   
-  height: 100px;
+ /* height: 100px;
   width: 100px;
-  border-radius: 50%;
+  border-radius: 25%;
   border: 1px solid Black;
-  background-image: linear-gradient(30deg, lightgreen, white); 
+  background-image: linear-gradient(30deg, rgb(144, 238, 146), white); 
+  */
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border: 4px solid #000;
+  background-color: #FFF;
+  box-sizing: border-box;
+  transform: rotate(-45deg);
+  overflow: hidden;
   cursor: pointer;
+}
+#StartStopButton:hover {
+  background-color: #3C3C3C;
+  color: #FFF;
 }
 #LetsGoButton
 {
@@ -259,9 +345,9 @@ font-size:80px;
 {
 display: grid;
 grid-template-areas: 
-'Header Header Header Header LetsGo'
-'Table Table Table Table Filters '
-'Notice Notice Notice Notice Notice';
+'Header Header Header Header '
+'Table Table Table  Filters '
+'Notice Notice Notice  Notice';
 padding:10px;
 }
 
