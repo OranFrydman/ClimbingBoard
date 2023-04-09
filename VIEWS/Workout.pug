@@ -27,11 +27,11 @@ html(lang='en')
                 li
                   a#go_to_stats(href='http://localhost:8080/statistics') My Climbs
         #Grades
-          button#Easy.btn.DiffGrades   
+          button#Easy.grade_btn.DiffGrades   
             span Easy  
-          button#Medium.btn.DiffGrades 
+          button#Medium.grade_btn.DiffGrades 
             span Medium
-          button#Hard.btn.DiffGrades  
+          button#Hard.grade_btn.DiffGrades  
             span Hard 
         #Time
           #mainstopwatch
@@ -94,7 +94,8 @@ html(lang='en')
             #H26.holds
               img#Img26.ThreeFingersImg(src='/MEDIA/34FingersHold.jpg', alt='H26')
         #StartStop
-          button#StartStopButton(type='button') Start Climbing
+          button#StartStopButton(type='button') 
+            span Start Climbing
           |  
           button#reset(type='button')  Reset Clock 
     form#RecordForm(action='/createNewRecords', method='post')

@@ -15,7 +15,7 @@ grid-template-areas:
 'H18 H19 H20 H21 H22 H23 H24 H25 H26 H26'
 ;
 }
-.holds{visibility: hidden;}
+.holds{visibility:hidden;}
 .holds img {
   display: block;
   margin-left: auto;
@@ -49,7 +49,7 @@ grid-template-areas:
 #Img7,#Img8{position: relative;right: 50%;}
 #Img9,#Img10,#Img11,#Img12,#Img13,#Img21,#img19,#Img20,#Img21{position: relative;}
 #Img9{position: relative;left:10%;}
-#Img10{position: relative;width:90%;left:20%;}
+#Img10{position: relative;width:90%;left:15%;}
 #Img11{position: relative;width:80%;}
 #Img12{position: relative;width:80%;right:15%;}
 #Img14{position: relative;width:80%;left:15%;}
