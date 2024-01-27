@@ -318,15 +318,27 @@ font-size:80px;
   text-align: center;
   transform: rotate(45deg);
 }
-#reset{
-  height: 40px;
+#reset {
+  float: left;
   width: 100px;
-  border-radius: 5%;
-  border: 1px solid Black;
-  background-image: linear-gradient(30deg, Yellow, white); 
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
+  border: 4px solid #000;
+  background-color: #FFF;
+  box-sizing: border-box;
+  transform: rotate(-45deg);
+  overflow: hidden;
   cursor: pointer;
 }
+#reset:hover {
+  background-color: #3C3C3C;
+  color: #FFF;
+}
+
+
 /*Hidden form to send query to DB*/ 
 #RecordForm{
   visibility: hidden;

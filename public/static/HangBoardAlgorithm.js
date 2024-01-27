@@ -190,13 +190,23 @@ function HideHold(name)
 //HoldIndex 0-25 (total of 26 holds)
 //array[HoldIndex] = actual hold score
 //RightName = "H(XX)"(H1-H26)
-
+function changeHoldSound() {
+    // Create an audio element
+    var audio = new Audio();
+  
+    // Set the source of the audio to the beep.wav file
+    audio.src = '/MEDIA/beep.wav';
+  
+    // Play the sound
+    audio.play();
+  }
 function ChangeHold() //Randomly choose a different hold on the device
 {
   
   let flag=0
   while(flag<1)
   {
+    
     let HoldIndex=Math.floor(Math.random() * 26); 
     let side = Math.random();
     if(HoldIndex!=leftI&&HoldIndex!=rightI)
@@ -213,6 +223,7 @@ function ChangeHold() //Randomly choose a different hold on the device
               RightName="H"+(HoldIndex+1); // Inserting the new Hold Name to memory
               rightI=HoldIndex; // Inserting the new Index 
               ShowHold(RightName); // show the hold
+              
               score=leftH+ArrayHolds[HoldIndex]; // Calculating new score
               flag=1; //exit while iterations
               
@@ -232,6 +243,7 @@ function ChangeHold() //Randomly choose a different hold on the device
               flag=1;
           }
         }
+        changeHoldSound()
     }
     else // Hold doesnt change this iteration. (Rest Mode)
     {

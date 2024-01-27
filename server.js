@@ -39,12 +39,14 @@ app.get('/',(req, res)=>{
    
    res.render('HomePage',{user: "Welcome back "+GetUser(req,res,"name")});
 }); 
+
 app.get('/Workout',(req, res)=>{
    res.render('Workout',{user: "Welcome, "+GetUser(req,res,"name")});
 });
 app.get('/HomePage',(req, res)=>{
    res.render('HomePage',{user: "Welcome, "+GetUser(req,res,"name")});
 });
+app.get('/LogOut',CRUD.LogOut);
 app.get('/Statistics',CRUD.PullStats);
 app.get("/Delete", CRUD.DeleteUser);
 app.post("/createNewClimber", CRUD.createNewClimber);

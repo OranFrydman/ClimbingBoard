@@ -4,7 +4,7 @@ var path = require('path');
 
 
 
-const createNewClimber = (req, res)=>{
+    const createNewClimber = (req, res)=>{
     if (!req.body) {
         res.render('CrushView',{GetMsg: "content cannot be empty"});
         return;
@@ -37,7 +37,7 @@ const createNewClimber = (req, res)=>{
     }
     })}; 
 
-const Login = (req, res)=>{
+    const Login = (req, res)=>{
     if (!req.body) {
         res.render('CrushView',{GetMsg: "content cannot be empty"});
         return;
@@ -70,8 +70,13 @@ const Login = (req, res)=>{
         }			
  
     })}; 
-
-        const createNewRecords = (req, res)=>{
+    const LogOut = (req,res)=>{
+        res.append('Set-Cookie', 'UserMail_C=; Path=/; HttpOnly; Expires=Thu, 01 Jan 1970 00:00:00 GMT');
+        res.append('Set-Cookie', 'UserName_C=; Path=/; HttpOnly; Expires=Thu, 01 Jan 1970 00:00:00 GMT');
+        res.redirect('/HomePage');
+        console.log("You're logged out")
+    }
+    const createNewRecords = (req, res)=>{
             const NewRecord = {
                 "email": GetUser(req,res,"email"),
                 "date": (new Date ((new Date((new Date(new Date())).toISOString() )).getTime() - ((new Date()).getTimezoneOffset()*60000))).toISOString().slice(0, 19).replace('T', ' '),
@@ -92,7 +97,7 @@ const Login = (req, res)=>{
                 } )
                 
         }; 
-         function convertLevel(num)
+    function convertLevel(num)
          {
             
           if(num==1) return "easy";
@@ -100,7 +105,7 @@ const Login = (req, res)=>{
           if(num==3) return "hard";
               
          }
-         const PullStats = (req, res)=>{
+    const PullStats = (req, res)=>{
          let EmailQuery = GetUser(req,res,"email")
          console.log("Pulling stats with "+EmailQuery);
          sql.query("SELECT ROW_NUMBER() OVER(ORDER BY (Select 0)) as num ,DATE_FORMAT(date,'%Y/%m/%d - %H:%i:%S') as date,duration,level FROM stats WHERE email=?",EmailQuery, (err, data)=>{
@@ -119,7 +124,7 @@ const Login = (req, res)=>{
          });
          
         };
-        const PullFilters = (req, res)=>{
+    const PullFilters = (req, res)=>{
             const QueryFilter = {
                 "DateStart": req.body.DateStart,
                 "DateFinish": req.body.DateFinish,
@@ -165,7 +170,7 @@ const Login = (req, res)=>{
             
            };
 
-           const DeleteUser = (req, res)=>{
+    const DeleteUser = (req, res)=>{
             let EmailQuery = GetUser(req,res,"email")
             if(EmailQuery == "Guest@Guest.Guest")
             {
@@ -182,7 +187,7 @@ const Login = (req, res)=>{
            };
 
 
-        function GetUser(req,res,field){
+    function GetUser(req,res,field){
             if (req.get("Cookie"))
             {
                var session = req.get("Cookie");
@@ -196,4 +201,4 @@ const Login = (req, res)=>{
             if(field =="email") return "Guest@Guest.Guest";
             if(field=="name") return "Guest";
            };
-module.exports = {createNewClimber,Login,createNewRecords,PullStats,PullFilters,DeleteUser};
+module.exports = {createNewClimber,Login,LogOut,createNewRecords,PullStats,PullFilters,DeleteUser};
