@@ -31,15 +31,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true
 }));
 // view engine setup
-app.engine('html',require('pug').renderFile);
+app.engine('html',require('pug').renderFile); // Debug
 app.set('views', path.join(__dirname,'views'));
 app.set('view engine', 'pug');
 //routings
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/',(req, res)=>{
-   console.log("Current user is"+GetUser(req,res,"name"))
+   console.log("Current user is"+GetUser(req,res,"name")) // Debug
    // res.render('HomePage',{user: "Welcome back "+GetUser(req,res,"name")});
-   res.send('<html><body><h1>Empty Page</h1><p>This is an empty page with some text.</p></body></html>');
+   res.render("test")
+   // res.send('<html><body><h1>Empty Page</h1><p>This is an empty page with some text.</p></body></html>'); // Debug
 }); 
 
 app.get('/Workout',(req, res)=>{
