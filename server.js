@@ -36,7 +36,7 @@ app.set('view engine', 'pug');
 //routings
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/',(req, res)=>{
-   
+   console.log("Current user is"+GetUser(req,res,"name"))
    res.render('HomePage',{user: "Welcome back "+GetUser(req,res,"name")});
 }); 
 
