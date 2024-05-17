@@ -115,8 +115,8 @@ var path = require('path');
                 return;
             }
    
-            console.log("pulling stats..success");
-            res.render('statistics',{
+            console.log("pulling stats...");
+            res.render('Statistics',{
                 myclimbs:data,
                 user: "Welcome, "+GetUser(req,res,"name")
             });
