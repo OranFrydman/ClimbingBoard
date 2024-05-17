@@ -4,7 +4,6 @@ rather than include it with all the main pages styles.*/
 /*DeviceGrid*/
 #containerDevice
 {
-border:solid 1px black;
 display:grid;
 max-width:  100%;
 position: relative;
@@ -16,9 +15,9 @@ grid-template-areas:
 'H18 H19 H20 H21 H22 H23 H24 H25 H26 H26'
 ;
 }
-/*.holds{visibility:hidden;}*/
+.holds{visibility:hidden;}
 .holds img {
-  border:solid 1px red;
+
   display: block;
   margin-left: auto;
   margin-right: auto;
