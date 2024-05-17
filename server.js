@@ -65,10 +65,12 @@ app.post("/FilterStats", CRUD.PullFilters);
          var session = req.get("Cookie");
          console.log("Session is +"+session)
          var splitSession = session.split(/=|;/);
-         var email = splitSession[1];
-         var username = splitSession[3];
-         console.log(email);
-         console.log(username);
+
+         var email = splitSession[3];
+         var username = splitSession[5];
+         console.log("Split Sess is "+splitSession);
+         console.log("Email in Session is "+email);
+         console.log("User in Session is "+username);
          if(field =="email") return email;
          if(field=="name") return username;
       }

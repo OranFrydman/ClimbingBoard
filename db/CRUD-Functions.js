@@ -193,8 +193,8 @@ var path = require('path');
                var session = req.get("Cookie");
                console.log("Session is +"+session)
                var splitSession = session.split(/=|;/);
-               var email = splitSession[1];
-               var username = splitSession[3];
+               var email = splitSession[3];
+               var username = splitSession[5];
                if(field =="email") return email;
                if(field=="name") return username; 
             }
