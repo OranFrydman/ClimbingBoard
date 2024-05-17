@@ -32,12 +32,12 @@ app.use(bodyParser.urlencoded({ extended: true
 }));
 // view engine setup
 app.engine('html',require('pug').renderFile); // Debug
-app.set('views', path.join(__dirname,'views'));
+app.set('VIEWS', path.join(__dirname,'VIEWS'));
 app.set('view engine', 'pug');
 //routings
 app.use(express.static(path.join(__dirname, 'public')));
-console.log("Views directory:", path.join(__dirname, 'views')); //Debug
-console.log("Files in views directory:", fs.readdirSync(path.join(__dirname, 'views'))); //Debug
+console.log("Views directory:", path.join(__dirname, 'VIEWS')); //Debug
+console.log("Files in views directory:", fs.readdirSync(path.join(__dirname, 'VIEWS'))); //Debug
 app.get('/',(req, res)=>{
    console.log("Current user is"+GetUser(req,res,"name")) // Debug
    res.render('HomePage',{user: "Welcome back "+GetUser(req,res,"name")}); // Fail on this line
