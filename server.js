@@ -40,9 +40,7 @@ console.log("Views directory:", path.join(__dirname, 'views')); //Debug
 console.log("Files in views directory:", fs.readdirSync(path.join(__dirname, 'views'))); //Debug
 app.get('/',(req, res)=>{
    console.log("Current user is"+GetUser(req,res,"name")) // Debug
-   // res.render('HomePage',{user: "Welcome back "+GetUser(req,res,"name")});
-
-   res.send('<html><body><h1>Empty Page</h1><p>This is an empty page with some text.</p></body></html>'); // Debug
+   res.render('HomePage',{user: "Welcome back "+GetUser(req,res,"name")}); // Fail on this line
 }); 
 
 app.get('/Workout',(req, res)=>{
