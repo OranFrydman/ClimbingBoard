@@ -438,11 +438,6 @@ padding:10px;
   100% { width: 100px; }
 }
 
-@media screen and (max-width: 1000px) {
-  .GridSettings {
-    background:var(--FormColor2);
-  }
-}
 
 .Active {
   border: blue 3px dotted; 
