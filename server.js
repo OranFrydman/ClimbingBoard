@@ -3,7 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const port=8080;
-const CRUD = require("./db/CRUD-functions");
+const CRUD = require("./db/CRUD-Functions");
 const sql = require('./db/db');
 const cookieParser = require('cookie-parser');
 const CreateDB = require('./db/CreateDB');
@@ -65,7 +65,6 @@ app.post("/FilterStats", CRUD.PullFilters);
          var session = req.get("Cookie");
          console.log("Session is +"+session)
          var splitSession = session.split(/=|;/);
-
          var email = splitSession[3];
          var username = splitSession[5];
          console.log("Split Sess is "+splitSession);
