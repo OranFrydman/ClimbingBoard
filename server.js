@@ -39,7 +39,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/',(req, res)=>{
    console.log("Current user is"+GetUser(req,res,"name")) // Debug
    // res.render('HomePage',{user: "Welcome back "+GetUser(req,res,"name")});
-   res.render("test")
+   console.log("Views directory:", path.join(__dirname, 'views')); //Debug
+   console.log("Files in views directory:", fs.readdirSync(path.join(__dirname, 'views'))); //Debug
    // res.send('<html><body><h1>Empty Page</h1><p>This is an empty page with some text.</p></body></html>'); // Debug
 }); 
 
