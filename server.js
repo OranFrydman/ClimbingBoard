@@ -38,7 +38,8 @@ app.set('view engine', 'pug');
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/',(req, res)=>{
    console.log("Current user is"+GetUser(req,res,"name"))
-   res.render('HomePage',{user: "Welcome back "+GetUser(req,res,"name")});
+   // res.render('HomePage',{user: "Welcome back "+GetUser(req,res,"name")});
+   res.send('<html><body><h1>Empty Page</h1><p>This is an empty page with some text.</p></body></html>');
 }); 
 
 app.get('/Workout',(req, res)=>{
