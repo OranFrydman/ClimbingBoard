@@ -16,3 +16,8 @@ const connection = mysql.createConnection({
     });
     module.exports = connection;
     
+    connection.end((err) => {
+        if (err) return console.error(err.message);
+      
+        console.log('Close the database connection.');
+      });
