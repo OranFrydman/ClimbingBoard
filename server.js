@@ -11,6 +11,7 @@ const fs = require('fs');
 const stringify = require('csv-stringify').stringify;
 const { parse } = require("csv-parse");
 const CSVToJSON = require('csvtojson');
+const BASE_URL = process.env.BASE_URL || 'http://localhost:8080';
 
 
 app.get('/CreateTable_Users',CreateDB.CreateTable_Users);
