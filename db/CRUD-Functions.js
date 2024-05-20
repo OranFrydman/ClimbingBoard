@@ -73,7 +73,7 @@ var path = require('path');
     const LogOut = (req,res)=>{
         res.append('Set-Cookie', 'UserMail_C=; Path=/; HttpOnly; Expires=Thu, 01 Jan 1970 00:00:00 GMT');
         res.append('Set-Cookie', 'UserName_C=; Path=/; HttpOnly; Expires=Thu, 01 Jan 1970 00:00:00 GMT');
-        res.redirect('/HomePage');
+        res.render('HomePage',{user: "Welcome, "+GetUser(req,res,"name")});
         console.log("You're logged out")
     }
     const createNewRecords = (req, res)=>{
@@ -84,7 +84,7 @@ var path = require('path');
                 "level":convertLevel(req.body.ChosenLevel)
             };
             console.log(NewRecord);
-           
+            // sql.connect();
                 sql.query("INSERT INTO stats SET ?", NewRecord, (err, mysqlres)=>{
                     if (err) {
                         console.log("ERROR: ", err);
