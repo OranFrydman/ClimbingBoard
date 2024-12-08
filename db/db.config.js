@@ -3,13 +3,12 @@
 //     USER: "root",
 //     PASSWORD: "oMate5357#",
 //     DB: "mysql"
-    
+
 //     };
 
 module.exports = {
-        HOST: process.env.HOST || "localhost",
-        USER: process.env.USER || "root",
-        PASSWORD: process.env.PASSWORD || "oMate5357#",
-        DB: process.env.DB || "mysql"
-        
-        };
+  DB_HOST: process.env.HOST || "localhost",
+  DB_USER: process.env.USER || "root",
+  DB_PASSWORD: process.env.PASSWORD || "oMate5357#",
+  DB: process.env.DB || "mysql",
+};

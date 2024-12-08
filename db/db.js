@@ -1,18 +1,14 @@
 var mysql = require("mysql2");
-const dbConfig = require('./db.config');
+const dbConfig = require("./db.config");
 // Create a connection to the database
-const connection = mysql.createConnection({
-     host: dbConfig.HOST,
-     user: dbConfig.USER,
-     password: dbConfig.PASSWORD,
-     database: dbConfig.DB
-    });
-    
+const pool = mysql.createPool({
+  host: dbConfig.DB_HOST,
+  user: dbConfig.DB_USER,
+  password: dbConfig.DB_PASSWORD,
+  database: dbConfig.DB,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+});
 
-// open the MySQL connection
-    connection.connect(error => {
-    if (error) throw error;
-    console.log("Successfully connected to the database.");
-    });
-    module.exports = connection;
-    
+module.exports = pool;
