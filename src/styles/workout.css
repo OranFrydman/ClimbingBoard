@@ -307,14 +307,15 @@
   justify-content: center;
   margin: auto;
   background: transparent;
-  border: 3px solid #22c55e;
+  border: 5px solid #16a34a;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
 }
 
 .hold-shape--mono {
   width: 45%;
   height: 45%;
   border-radius: 50%;
-  border-color: #22c55e;
+  border-color: #16a34a;
 }
 
 .hold-shape--dou {
