@@ -1,0 +1,8 @@
+# Render Blueprint – ensures the React app is built before the server starts.
+# See https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    runtime: node
+    name: climbingboard
+    buildCommand: npm install && npm run build
+    startCommand: npm start

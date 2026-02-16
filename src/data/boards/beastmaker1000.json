@@ -4,299 +4,40 @@
   "dev": true,
   "base_width": 20,
   "base_height": 20,
-  "defaultLeftIndex": 8,
-  "defaultRightIndex": 7,
+  "defaultLeftIndex": 0,
+  "defaultRightIndex": 4,
   "levelThresholds": {
     "easy": 10,
     "medium": 6,
     "hard": 1
   },
   "holds": [
-    {
-      "index": 0,
-      "difficulty": 7,
-      "type": "Full",
-      "position": {
-        "y": 1.6,
-        "x": 0,
-        "width": 4,
-        "height": 7.6000000000000005
-      }
-    },
-    {
-      "index": 1,
-      "difficulty": 7,
-      "type": "Full",
-      "position": {
-        "y": 1.6,
-        "x": 4,
-        "width": 4,
-        "height": 7.6000000000000005
-      }
-    },
-    {
-      "index": 2,
-      "difficulty": 8,
-      "type": "Full",
-      "position": {
-        "y": 1.6,
-        "x": 8,
-        "width": 2,
-        "height": 4
-      }
-    },
-    {
-      "index": 3,
-      "difficulty": 8,
-      "type": "Full",
-      "position": {
-        "y": 1.6,
-        "x": 10,
-        "width": 2,
-        "height": 4
-      }
-    },
-    {
-      "index": 4,
-      "difficulty": 7,
-      "type": "Full",
-      "position": {
-        "y": 1.6,
-        "x": 12,
-        "width": 4,
-        "height": 7.6000000000000005
-      }
-    },
-    {
-      "index": 5,
-      "difficulty": 7,
-      "type": "Full",
-      "position": {
-        "y": 1.6,
-        "x": 16,
-        "width": 4,
-        "height": 7.6000000000000005
-      }
-    },
-    {
-      "index": 6,
-      "difficulty": 4,
-      "type": "Tree",
-      "position": {
-        "y": 5.6000000000000005,
-        "x": 8,
-        "width": 2,
-        "height": 3.6
-      }
-    },
-    {
-      "index": 7,
-      "difficulty": 6,
-      "type": "Tree",
-      "position": {
-        "y": 5.6000000000000005,
-        "x": 10,
-        "width": 2,
-        "height": 3.6
-      }
-    },
-    {
-      "index": 8,
-      "difficulty": 4,
-      "type": "Full",
-      "position": {
-        "y": 9.600000000000001,
-        "x": 0,
-        "width": 2,
-        "height": 3.6
-      }
-    },
-    {
-      "index": 9,
-      "difficulty": 2,
-      "type": "Mono",
-      "position": {
-        "y": 9.600000000000001,
-        "x": 2,
-        "width": 1.8,
-        "height": 3.6
-      }
-    },
-    {
-      "index": 10,
-      "difficulty": 4,
-      "type": "Dou",
-      "position": {
-        "y": 9.600000000000001,
-        "x": 3.8000000000000003,
-        "width": 2.4000000000000004,
-        "height": 3.6
-      }
-    },
-    {
-      "index": 11,
-      "difficulty": 3,
-      "type": "Dou",
-      "position": {
-        "y": 9.600000000000001,
-        "x": 6.2,
-        "width": 2.4000000000000004,
-        "height": 3.6
-      }
-    },
-    {
-      "index": 12,
-      "difficulty": 10,
-      "type": "Full",
-      "position": {
-        "y": 9.600000000000001,
-        "x": 8.6,
-        "width": 2.8000000000000003,
-        "height": 3.6
-      }
-    },
-    {
-      "index": 13,
-      "difficulty": 3,
-      "type": "Dou",
-      "position": {
-        "y": 9.600000000000001,
-        "x": 11.4,
-        "width": 2.4000000000000004,
-        "height": 3.6
-      }
-    },
-    {
-      "index": 14,
-      "difficulty": 4,
-      "type": "Dou",
-      "position": {
-        "y": 9.600000000000001,
-        "x": 13.8,
-        "width": 2.4000000000000004,
-        "height": 3.6
-      }
-    },
-    {
-      "index": 15,
-      "difficulty": 2,
-      "type": "Mono",
-      "position": {
-        "y": 9.600000000000001,
-        "x": 16.2,
-        "width": 1.8,
-        "height": 3.6
-      }
-    },
-    {
-      "index": 16,
-      "difficulty": 4,
-      "type": "Full",
-      "position": {
-        "y": 9.600000000000001,
-        "x": 16,
-        "width": 2,
-        "height": 3.6
-      }
-    },
-    {
-      "index": 17,
-      "difficulty": 5,
-      "type": "Tree",
-      "position": {
-        "y": 9.600000000000001,
-        "x": 18,
-        "width": 2,
-        "height": 3.6
-      }
-    },
-    {
-      "index": 18,
-      "difficulty": 1,
-      "type": "Mono",
-      "position": {
-        "y": 13.600000000000001,
-        "x": 0,
-        "width": 2.4000000000000004,
-        "height": 5.6000000000000005
-      }
-    },
-    {
-      "index": 19,
-      "difficulty": 2,
-      "type": "Dou",
-      "position": {
-        "y": 13.600000000000001,
-        "x": 2.4000000000000004,
-        "width": 1.8,
-        "height": 5.6000000000000005
-      }
-    },
-    {
-      "index": 20,
-      "difficulty": 3,
-      "type": "Dou",
-      "position": {
-        "y": 13.600000000000001,
-        "x": 4.2,
-        "width": 2.4000000000000004,
-        "height": 5.6000000000000005
-      }
-    },
-    {
-      "index": 21,
-      "difficulty": 7,
-      "type": "Full",
-      "position": {
-        "y": 13.600000000000001,
-        "x": 6.6000000000000005,
-        "width": 2.4000000000000004,
-        "height": 5.6000000000000005
-      }
-    },
-    {
-      "index": 22,
-      "difficulty": 3,
-      "type": "Dou",
-      "position": {
-        "y": 13.600000000000001,
-        "x": 9,
-        "width": 2.4000000000000004,
-        "height": 5.6000000000000005
-      }
-    },
-    {
-      "index": 23,
-      "difficulty": 2,
-      "type": "Dou",
-      "position": {
-        "y": 13.600000000000001,
-        "x": 11.4,
-        "width": 2.4000000000000004,
-        "height": 5.6000000000000005
-      }
-    },
-    {
-      "index": 24,
-      "difficulty": 1,
-      "type": "Mono",
-      "position": {
-        "y": 13.600000000000001,
-        "x": 13.8,
-        "width": 2.4000000000000004,
-        "height": 5.6000000000000005
-      }
-    },
-    {
-      "index": 25,
-      "difficulty": 5,
-      "type": "Tree",
-      "position": {
-        "y": 13.600000000000001,
-        "x": 16.2,
-        "width": 3.8000000000000003,
-        "height": 5.6000000000000005
-      }
-    }
+    { "index": 0, "difficulty": 10, "type": "Full", "position": { "x": 0, "y": 1, "width": 4, "height": 4 } },
+    { "index": 1, "difficulty": 7, "type": "Tree", "position": { "x": 4, "y": 1, "width": 4, "height": 4 } },
+    { "index": 2, "difficulty": 6, "type": "Tree", "position": { "x": 8, "y": 1, "width": 4, "height": 4 } },
+    { "index": 3, "difficulty": 7, "type": "Tree", "position": { "x": 12, "y": 1, "width": 4, "height": 4 } },
+    { "index": 4, "difficulty": 10, "type": "Full", "position": { "x": 16, "y": 1, "width": 4, "height": 4 } },
+
+    { "index": 5, "difficulty": 8, "type": "Tree", "position": { "x": 0, "y": 6, "width": 6.5, "height": 2.5 } },
+    { "index": 6, "difficulty": 9, "type": "Tree", "position": { "x": 6.5, "y": 6, "width": 7, "height": 2.5 } },
+    { "index": 7, "difficulty": 8, "type": "Tree", "position": { "x": 13.5, "y": 6, "width": 6.5, "height": 2.5 } },
+
+    { "index": 8, "difficulty": 6, "type": "Tree", "position": { "x": 0, "y": 9, "width": 5, "height": 2.2 } },
+    { "index": 9, "difficulty": 5, "type": "Tree", "position": { "x": 5, "y": 9, "width": 3.5, "height": 2.2 } },
+    { "index": 10, "difficulty": 5, "type": "Tree", "position": { "x": 8.5, "y": 9, "width": 3.5, "height": 2.2 } },
+    { "index": 11, "difficulty": 6, "type": "Tree", "position": { "x": 12, "y": 9, "width": 5, "height": 2.2 } },
+
+    { "index": 12, "difficulty": 6, "type": "Tree", "position": { "x": 0, "y": 12, "width": 3, "height": 2 } },
+    { "index": 13, "difficulty": 5, "type": "Tree", "position": { "x": 3, "y": 12, "width": 3, "height": 2 } },
+    { "index": 14, "difficulty": 6, "type": "Tree", "position": { "x": 6, "y": 12, "width": 3, "height": 2 } },
+    { "index": 15, "difficulty": 6, "type": "Tree", "position": { "x": 9, "y": 12, "width": 3, "height": 2 } },
+    { "index": 16, "difficulty": 5, "type": "Dou", "position": { "x": 12, "y": 12, "width": 3, "height": 2 } },
+    { "index": 17, "difficulty": 6, "type": "Dou", "position": { "x": 15, "y": 12, "width": 3, "height": 2 } },
+
+    { "index": 18, "difficulty": 4, "type": "Tree", "position": { "x": 5.5, "y": 15, "width": 4, "height": 2.5 } },
+    { "index": 19, "difficulty": 4, "type": "Tree", "position": { "x": 10.5, "y": 15, "width": 4, "height": 2.5 } },
+
+    { "index": 20, "difficulty": 7, "type": "Full", "position": { "x": 0, "y": 18, "width": 7, "height": 2 } },
+    { "index": 21, "difficulty": 7, "type": "Full", "position": { "x": 13, "y": 18, "width": 7, "height": 2 } }
   ]
 }
