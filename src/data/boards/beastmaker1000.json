@@ -1,7 +1,7 @@
 {
   "id": "beastmaker1000",
   "name": "BeastMaker 1000",
-  "dev": true,
+  "dev": false,
   "base_width": 20,
   "base_height": 20,
   "defaultLeftIndex": 0,
@@ -12,32 +12,30 @@
     "hard": 1
   },
   "holds": [
-    { "index": 0, "difficulty": 10, "type": "Full", "position": { "x": 0, "y": 1, "width": 4, "height": 4 } },
-    { "index": 1, "difficulty": 7, "type": "Tree", "position": { "x": 4, "y": 1, "width": 4, "height": 4 } },
-    { "index": 2, "difficulty": 6, "type": "Tree", "position": { "x": 8, "y": 1, "width": 4, "height": 4 } },
-    { "index": 3, "difficulty": 7, "type": "Tree", "position": { "x": 12, "y": 1, "width": 4, "height": 4 } },
-    { "index": 4, "difficulty": 10, "type": "Full", "position": { "x": 16, "y": 1, "width": 4, "height": 4 } },
+    {"index":0,"difficulty":10,"type":"Full","position":{"x":1,"y":5.2,"width":3.61,"height":2.6}},
+    {"index":1,"difficulty":3,"type":"Tree","position":{"x":4.39,"y":5.2,"width":3.61,"height":2.6}},
+    {"index":2,"difficulty":4,"type":"Tree","position":{"x":8,"y":5.2,"width":4,"height":2.6}},
+    {"index":3,"difficulty":3,"type":"Tree","position":{"x":12,"y":5.2,"width":3.61,"height":2.6}},
+    {"index":4,"difficulty":10,"type":"Full","position":{"x":15.39,"y":5.2,"width":3.61,"height":2.6}},
 
-    { "index": 5, "difficulty": 8, "type": "Tree", "position": { "x": 0, "y": 6, "width": 6.5, "height": 2.5 } },
-    { "index": 6, "difficulty": 9, "type": "Tree", "position": { "x": 6.5, "y": 6, "width": 7, "height": 2.5 } },
-    { "index": 7, "difficulty": 8, "type": "Tree", "position": { "x": 13.5, "y": 6, "width": 6.5, "height": 2.5 } },
+    {"index":5,"difficulty":6,"type":"Tree","position":{"x":1,"y":7,"width":3.63,"height":2}},
+    {"index":6,"difficulty":5,"type":"Dou","position":{"x":7,"y":7,"width":3.39,"height":2}},
+    {"index":7,"difficulty":5,"type":"Dou","position":{"x":9.4,"y":7,"width":3.39,"height":2}},
+    {"index":8,"difficulty":5,"type":"Tree","position":{"x":15.39,"y":7,"width":3.63,"height":2}},
 
-    { "index": 8, "difficulty": 6, "type": "Tree", "position": { "x": 0, "y": 9, "width": 5, "height": 2.2 } },
-    { "index": 9, "difficulty": 5, "type": "Tree", "position": { "x": 5, "y": 9, "width": 3.5, "height": 2.2 } },
-    { "index": 10, "difficulty": 5, "type": "Tree", "position": { "x": 8.5, "y": 9, "width": 3.5, "height": 2.2 } },
-    { "index": 11, "difficulty": 6, "type": "Tree", "position": { "x": 12, "y": 9, "width": 5, "height": 2.2 } },
+    {"index":9,"difficulty":10,"type":"Tree","position":{"x":0.75,"y":8.8,"width":3.63,"height":2}},
+    {"index":10,"difficulty":5,"type":"Dou","position":{"x":3.25,"y":8.8,"width":3.39,"height":2}},
+    {"index":11,"difficulty":6,"type":"Tree","position":{"x":5.75,"y":8.8,"width":2.58,"height":2}},
+    {"index":12,"difficulty":10,"type":"Tree","position":{"x":8.25,"y":8.8,"width":3.39,"height":2}},
+    {"index":13,"difficulty":6,"type":"Tree","position":{"x":11.56,"y":8.8,"width":2.58,"height":2}},
+    {"index":14,"difficulty":5,"type":"Dou","position":{"x":13.25,"y":8.8,"width":3.39,"height":2}},
+    {"index":15,"difficulty":10,"type":"Tree","position":{"x":15.51,"y":8.8,"width":3.63,"height":2}},
 
-    { "index": 12, "difficulty": 6, "type": "Tree", "position": { "x": 0, "y": 12, "width": 3, "height": 2 } },
-    { "index": 13, "difficulty": 5, "type": "Tree", "position": { "x": 3, "y": 12, "width": 3, "height": 2 } },
-    { "index": 14, "difficulty": 6, "type": "Tree", "position": { "x": 6, "y": 12, "width": 3, "height": 2 } },
-    { "index": 15, "difficulty": 6, "type": "Tree", "position": { "x": 9, "y": 12, "width": 3, "height": 2 } },
-    { "index": 16, "difficulty": 5, "type": "Dou", "position": { "x": 12, "y": 12, "width": 3, "height": 2 } },
-    { "index": 17, "difficulty": 6, "type": "Dou", "position": { "x": 15, "y": 12, "width": 3, "height": 2 } },
-
-    { "index": 18, "difficulty": 4, "type": "Tree", "position": { "x": 5.5, "y": 15, "width": 4, "height": 2.5 } },
-    { "index": 19, "difficulty": 4, "type": "Tree", "position": { "x": 10.5, "y": 15, "width": 4, "height": 2.5 } },
-
-    { "index": 20, "difficulty": 7, "type": "Full", "position": { "x": 0, "y": 18, "width": 7, "height": 2 } },
-    { "index": 21, "difficulty": 7, "type": "Full", "position": { "x": 13, "y": 18, "width": 7, "height": 2 } }
+    {"index":16,"difficulty":4,"type":"Tree","position":{"x":2.25,"y":10.5,"width":3.39,"height":2}},
+    {"index":17,"difficulty":2,"type":"Dou","position":{"x":5.25,"y":10.5,"width":2.72,"height":2}},
+    {"index":18,"difficulty":3,"type":"Dou","position":{"x":7.4,"y":10.5,"width":2.72,"height":2}},
+    {"index":19,"difficulty":3,"type":"Dou","position":{"x":9.75,"y":10.5,"width":2.72,"height":2}},
+    {"index":20,"difficulty":2,"type":"Dou","position":{"x":11.75,"y":10.5,"width":2.72,"height":2}},
+    {"index":21,"difficulty":4,"type":"Tree","position":{"x":14,"y":10.5,"width":3.39,"height":2}}
   ]
 }
