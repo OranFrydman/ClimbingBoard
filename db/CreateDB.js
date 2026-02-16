@@ -130,7 +130,7 @@ const DropTable_Stats = (req, res)=>{
 }
 
 const ShowTable_Stats = (req,res)=>{
-    var Q3 = "SELECT * FROM stats";
+    var Q3 = "SELECT * FROM stats order by date desc";
     SQL.query(Q3, (err, mySQLres)=>{
         if (err) {
             console.log("error in showing table ", err);
