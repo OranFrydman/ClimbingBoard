@@ -31,8 +31,15 @@ app.get("/DropTable_Stats", CreateDB.DropTable_Stats);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Serve React app static files from dist directory FIRST (so bundle.js is served from dist)
-app.use(express.static(path.join(__dirname, "dist")));
+// Resolve dist directory: __dirname (where server.js lives) or process.cwd() for different hosts
+const distByDirname = path.join(__dirname, "dist");
+const distByCwd = path.join(process.cwd(), "dist");
+const distDir = fs.existsSync(path.join(distByDirname, "index.html"))
+  ? distByDirname
+  : fs.existsSync(path.join(distByCwd, "index.html"))
+    ? distByCwd
+    : distByDirname; // use __dirname for clearer error path if both missing
+app.use(express.static(distDir));
 
 // Serve static files from public directory (for media) - but exclude index.html
 app.use('/MEDIA', express.static(path.join(__dirname, "public", "MEDIA")));
@@ -73,6 +80,15 @@ app.post("/api/filterStats", (req, res) => {
   CRUD.PullFilters(req, res);
 });
 
+// Ensure dist was built (required for production / Render)
+const distIndex = path.join(distDir, "index.html");
+if (!fs.existsSync(distIndex)) {
+  console.error("Missing build output: dist/index.html not found.");
+  console.error("Checked: " + distByDirname + " and " + distByCwd);
+  console.error("On Render: set Build Command to: npm install && npm run build");
+  process.exit(1);
+}
+
 // Serve React app for all other routes (must be last)
 app.get("*", (req, res) => {
   // Only serve index.html for routes that don't have file extensions
@@ -81,7 +97,7 @@ app.get("*", (req, res) => {
   if (hasExtension) {
     return res.status(404).send('File not found');
   }
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+  res.sendFile(distIndex);
 });
 
 app.listen(port, () => {
