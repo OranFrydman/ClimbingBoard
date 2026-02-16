@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --env-file=env.txt server.js",
+    "start": "node server.js",
+    "start:local": "node --env-file=env.txt server.js",
     "dev": "nodemon --env-file=env.txt server.js",
     "build": "npm run build:react",
     "build:react": "webpack --mode production",

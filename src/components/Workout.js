@@ -219,7 +219,7 @@ function Workout() {
                   style={style}
                 >
                   <div className={`hold-shape hold-shape--${visual.shape}`} aria-hidden="true" />
-                  <span className="hold-index">{hold.index}</span>
+                  {board.dev && <span className="hold-index">{hold.index}</span>}
                 </div>
               );
             })}
@@ -337,7 +337,7 @@ function Workout() {
                       style={style}
                     >
                       <div className={`hold-shape hold-shape--${visual.shape}`} aria-hidden="true" />
-                      <span className="hold-index">{hold.index}</span>
+                      {board.dev && <span className="hold-index">{hold.index}</span>}
                     </div>
                   );
                 })}
