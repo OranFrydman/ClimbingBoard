@@ -3,7 +3,7 @@ var path = require("path");
 
 const createNewClimber = (req, res) => {
   if (!req.body) {
-    res.render("CrushView", { GetMsg: "content cannot be empty" });
+    res.redirect("/CrushView?msg=" + encodeURIComponent("Content cannot be empty"));
     return;
   }
 
@@ -21,23 +21,15 @@ const createNewClimber = (req, res) => {
         sql.query("INSERT INTO climbers SET ?", NewClimber, (err, mysqlres) => {
           if (err) {
             console.log("ERROR: ", err);
-            res.render("CrushView", {
-              GetMsg: "Error Creating the account" + err,
-            });
+            res.redirect("/CrushView?msg=" + encodeURIComponent("Error Creating the account: " + err));
             return;
           }
           console.log("New climber created");
-          res.render("CrushView", {
-            GetMsg:
-              "Welcome! We are so happy you decided to join us =] go back home, sign in and begin your workout progress",
-          });
+          res.redirect("/CrushView?msg=" + encodeURIComponent("Welcome! We are so happy you decided to join us =] go back home, sign in and begin your workout progress"));
           return;
         });
       } else {
-        res.render("CrushView", {
-          GetMsg:
-            "Sorry, this email is already taken. We have yet to develop the feature to reset password please register with a new email",
-        });
+        res.redirect("/CrushView?msg=" + encodeURIComponent("Sorry, this email is already taken. We have yet to develop the feature to reset password please register with a new email"));
       }
     }
   );
@@ -45,7 +37,7 @@ const createNewClimber = (req, res) => {
 
 const Login = (req, res) => {
   if (!req.body) {
-    res.render("CrushView", { GetMsg: "content cannot be empty" });
+    res.redirect("/CrushView?msg=" + encodeURIComponent("Content cannot be empty"));
     return;
   }
   const LoginInfo = {
@@ -58,43 +50,45 @@ const Login = (req, res) => {
     "SELECT * FROM climbers where email=? and password=?",
     [LoginInfo.email, LoginInfo.Password],
     (err, mysqlres) => {
-      if (err) res.render("CrushView", { GetMsg: "Login Error" + err });
+      if (err) {
+        res.redirect("/CrushView?msg=" + encodeURIComponent("Login Error: " + err));
+        return;
+      }
       if (mysqlres.length > 0) {
         console.log(mysqlres);
 
         // Redirect to home page
         console.log("Youre logged in");
-        res.append(
-          "Set-Cookie",
-          "UserMail_C=" + LoginInfo.email + "; Path=/; HttpOnly"
-        );
-        res.append(
-          "Set-Cookie",
-          "UserName_C=" + mysqlres[0].name + "; Path=/; HttpOnly"
-        );
+        res.cookie("UserMail_C", LoginInfo.email, { httpOnly: true, path: "/" });
+        res.cookie("UserName_C", mysqlres[0].name, { httpOnly: true, path: "/" });
         res.redirect("/HomePage");
       } else {
-        res.render("CrushView", {
-          GetMsg:
-            "Something went wrong, You used a wrong email or password. Go back home and try again",
-        });
+        res.redirect("/CrushView?msg=" + encodeURIComponent("Something went wrong, You used a wrong email or password. Go back home and try again"));
       }
     }
   );
 };
 const LogOut = (req, res) => {
-  res.append(
-    "Set-Cookie",
-    "UserMail_C=; Path=/; HttpOnly; Expires=Thu, 01 Jan 1970 00:00:00 GMT"
-  );
-  res.append(
-    "Set-Cookie",
-    "UserName_C=; Path=/; HttpOnly; Expires=Thu, 01 Jan 1970 00:00:00 GMT"
-  );
-  res.render("HomePage", { user: "Welcome, " + GetUser(req, res, "name") });
+  res.clearCookie("UserMail_C", { path: "/" });
+  res.clearCookie("UserName_C", { path: "/" });
+  res.redirect("/HomePage");
   console.log("You're logged out");
 };
 const createNewRecords = (req, res) => {
+  // Validate required fields
+  if (!req.body.TimeStamp || !req.body.ChosenLevel) {
+    console.log("Missing required fields:", req.body);
+    res.redirect("/CrushView?msg=" + encodeURIComponent("Error: Missing workout data (duration or level)"));
+    return;
+  }
+
+  const level = convertLevel(req.body.ChosenLevel);
+  if (!level) {
+    console.log("Invalid level:", req.body.ChosenLevel);
+    res.redirect("/CrushView?msg=" + encodeURIComponent("Error: Invalid difficulty level"));
+    return;
+  }
+
   const NewRecord = {
     email: GetUser(req, res, "email"),
     date: new Date(
@@ -105,118 +99,103 @@ const createNewRecords = (req, res) => {
       .slice(0, 19)
       .replace("T", " "),
     duration: req.body.TimeStamp,
-    level: convertLevel(req.body.ChosenLevel),
+    level: level,
   };
-  console.log(NewRecord);
+  console.log("Creating new record:", NewRecord);
   // sql.connect();
   sql.query("INSERT INTO stats SET ?", NewRecord, (err, mysqlres) => {
     if (err) {
       console.log("ERROR: ", err);
-      res.render("CrushView", {
-        GetMsg: "Error Creating new Climb record" + err,
-      });
+      res.redirect("/CrushView?msg=" + encodeURIComponent("Error Creating new Climb record: " + err));
       return;
     }
     console.log("New Record created");
-    PullStats(req, res);
+    res.redirect("/Statistics");
     return;
   });
 };
 function convertLevel(num) {
-  if (num == 1) return "easy";
-  if (num == 2) return "medium";
-  if (num == 3) return "hard";
+  const levelNum = parseInt(num);
+  if (levelNum === 1) return "easy";
+  if (levelNum === 2) return "medium";
+  if (levelNum === 3) return "hard";
+  return "easy"; // default fallback
 }
 const PullStats = (req, res) => {
   let EmailQuery = GetUser(req, res, "email");
   console.log("Pulling stats with " + EmailQuery);
   sql.query(
-    "SELECT ROW_NUMBER() OVER(ORDER BY (Select 0)) as num ,DATE_FORMAT(date,'%Y/%m/%d - %H:%i:%S') as date,duration,level FROM stats WHERE email=?",
+    "SELECT ROW_NUMBER() OVER(ORDER BY date DESC) as num, DATE_FORMAT(date,'%Y/%m/%d - %H:%i:%S') as date, duration, level FROM stats WHERE email=? ORDER BY date DESC",
     EmailQuery,
     (err, data) => {
       if (err) {
-        res.render("CrushView", {
-          GetMsg: "Error couldnt pull your climbs " + err,
-        });
-
+        // Check if request wants JSON
+        if (req.headers.accept && req.headers.accept.includes('application/json')) {
+          res.json({ error: "Error couldn't pull your climbs " + err });
+          return;
+        }
+        res.redirect("/CrushView?msg=" + encodeURIComponent("Error couldn't pull your climbs: " + err));
         return;
       }
 
       console.log("pulling stats...");
-      res.render("Statistics", {
-        myclimbs: data,
-        user: "Welcome, " + GetUser(req, res, "name"),
-      });
+      // Check if request wants JSON
+      if (req.headers.accept && req.headers.accept.includes('application/json')) {
+        res.json({ climbs: data });
+        return;
+      }
+      res.redirect("/Statistics");
       return;
     }
   );
 };
 const PullFilters = (req, res) => {
-  const QueryFilter = {
-    DateStart: req.body.DateStart,
-    DateFinish: req.body.DateFinish,
-    EasyFilter: req.body.EasyFilter,
-    MediumFilter: req.body.MediumFilter,
-    HardFilter: req.body.HardFilter,
-  };
-  if (
-    !QueryFilter.EasyFilter &&
-    !QueryFilter.MediumFilter &&
-    !QueryFilter.HardFilter
-  ) {
-    QueryFilter.EasyFilter = "easy";
-    QueryFilter.MediumFilter = "medium";
-    QueryFilter.HardFilter = "hard";
-  }
-  if (!QueryFilter.DateStart) {
-    QueryFilter.DateStart = "1995-05-14";
-  }
-  if (!QueryFilter.DateFinish) {
-    QueryFilter.DateFinish = "2099-05-14";
-  }
-  let EmailQuery = GetUser(req, res, "email");
-  sql.query(
-    "SELECT ROW_NUMBER() OVER(ORDER BY (Select 0)) as num , DATE_FORMAT(date,'%Y/%m/%d - %H:%i:%S') as date,duration,level FROM stats WHERE email=? and level IN (?,?,?) and date between ? and ?",
-    [
-      EmailQuery,
-      QueryFilter.EasyFilter,
-      QueryFilter.MediumFilter,
-      QueryFilter.HardFilter,
-      QueryFilter.DateStart,
-      QueryFilter.DateFinish,
-    ],
-    (err, data) => {
-      if (err) {
-        console.log("ERROR: ", err);
-        res.render("CrushView", {
-          GetMsg: "Error couldnt pull your climbs " + err,
-        });
-        return;
+  const body = req.body || {};
+  // Build levels array: only include selected difficulties; if none selected, show all
+  const levels = [];
+  if (body.EasyFilter === "easy" || body.EasyFilter === "on") levels.push("easy");
+  if (body.MediumFilter === "medium" || body.MediumFilter === "on") levels.push("medium");
+  if (body.HardFilter === "hard" || body.HardFilter === "on") levels.push("hard");
+  const levelList = levels.length > 0 ? levels : ["easy", "medium", "hard"];
+
+  // Date range: full day for start and end (stats.date is DATETIME)
+  const dateStart = (body.DateStart || "1995-01-01") + " 00:00:00";
+  const dateFinish = (body.DateFinish || "2099-12-31") + " 23:59:59";
+
+  const EmailQuery = GetUser(req, res, "email");
+  const placeholders = levelList.map(() => "?").join(",");
+  const sqlQuery = `SELECT ROW_NUMBER() OVER(ORDER BY date DESC) as num, DATE_FORMAT(date,'%Y/%m/%d - %H:%i:%S') as date, duration, level FROM stats WHERE email=? AND level IN (${placeholders}) AND date BETWEEN ? AND ? ORDER BY date DESC`;
+  const params = [EmailQuery, ...levelList, dateStart, dateFinish];
+
+  sql.query(sqlQuery, params, (err, data) => {
+    if (err) {
+      console.log("ERROR: ", err);
+      if (req.headers.accept && req.headers.accept.includes("application/json")) {
+        return res.json({ error: "Error couldn't pull your climbs " + err });
       }
-      console.log("pulling filter stats..success");
-      res.render("statistics", {
-        myclimbs: data,
-        user: "Welcome, " + GetUser(req, res, "name"),
-      });
-      return;
+      return res.redirect("/CrushView?msg=" + encodeURIComponent("Error couldn't pull your climbs: " + err));
     }
-  );
+    console.log("pulling filter stats..success");
+    if (req.headers.accept && req.headers.accept.includes("application/json")) {
+      return res.json({ climbs: data });
+    }
+    return res.redirect("/Statistics");
+  });
 };
 
 const DeleteUser = (req, res) => {
   let EmailQuery = GetUser(req, res, "email");
   if (EmailQuery == "Guest@Guest.Guest") {
-    res.render("CrushView", { GetMsg: "You're Not logged in " });
+    res.redirect("/CrushView?msg=" + encodeURIComponent("You're Not logged in"));
     return;
   }
 
   sql.query("DELETE FROM stats WHERE email=?", EmailQuery, (err, data) => {
     if (err) {
-      res.render("CrushView", {
-        GetMsg: "We couldnt delete this account's climb " + err,
-      });
+      res.redirect("/CrushView?msg=" + encodeURIComponent("We couldn't delete this account's climbs: " + err));
+      return;
     }
-    res.render("CrushView", { GetMsg: "All Climbs deleted successfully" });
+    res.redirect("/CrushView?msg=" + encodeURIComponent("All Climbs deleted successfully"));
   });
 };
 
