@@ -11,5 +11,5 @@ module.exports = {
   DB_USER: process.env.DB_USER || process.env.USER || "root",
   DB_PASSWORD: process.env.PASSWORD || "oMate5357#",
   DB: process.env.DB || "mysql",
-  DB_PORT: process.env.PORT ? parseInt(process.env.PORT) : 3306,
+  DB_PORT: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 3306,
 };

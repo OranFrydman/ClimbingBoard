@@ -115,11 +115,11 @@ const createNewRecords = (req, res) => {
   });
 };
 function convertLevel(num) {
-  const levelNum = parseInt(num);
+  const levelNum = parseInt(num, 10);
   if (levelNum === 1) return "easy";
   if (levelNum === 2) return "medium";
   if (levelNum === 3) return "hard";
-  return "easy"; // default fallback
+  return null; // invalid level
 }
 const PullStats = (req, res) => {
   let EmailQuery = GetUser(req, res, "email");
