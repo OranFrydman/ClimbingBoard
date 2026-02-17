@@ -25,7 +25,9 @@ const createNewClimber = (req, res) => {
             return;
           }
           console.log("New climber created");
-          res.redirect("/CrushView?msg=" + encodeURIComponent("Welcome! We are so happy you decided to join us =] go back home, sign in and begin your workout progress"));
+          res.cookie("UserMail_C", NewClimber.email, { httpOnly: false, path: "/" });
+          res.cookie("UserName_C", NewClimber.name, { httpOnly: false, path: "/" });
+          res.redirect("/HomePage");
           return;
         });
       } else {
@@ -59,8 +61,8 @@ const Login = (req, res) => {
 
         // Redirect to home page
         console.log("Youre logged in");
-        res.cookie("UserMail_C", LoginInfo.email, { httpOnly: true, path: "/" });
-        res.cookie("UserName_C", mysqlres[0].name, { httpOnly: true, path: "/" });
+        res.cookie("UserMail_C", LoginInfo.email, { httpOnly: false, path: "/" });
+        res.cookie("UserName_C", mysqlres[0].name, { httpOnly: false, path: "/" });
         res.redirect("/HomePage");
       } else {
         res.redirect("/CrushView?msg=" + encodeURIComponent("Something went wrong, You used a wrong email or password. Go back home and try again"));

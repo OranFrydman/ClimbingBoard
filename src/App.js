@@ -4,6 +4,7 @@ import HomePage from './components/HomePage';
 import Workout from './components/Workout';
 import Statistics from './components/Statistics';
 import CrushView from './components/CrushView';
+import Instructions from './components/Instructions';
 
 function App() {
   console.log('App component rendering...');
@@ -14,6 +15,7 @@ function App() {
         <Route path="/HomePage" element={<HomePage />} />
         <Route path="/Workout" element={<Workout />} />
         <Route path="/Statistics" element={<Statistics />} />
+        <Route path="/Instructions" element={<Instructions />} />
         <Route path="/CrushView" element={<CrushView />} />
       </Routes>
     </div>

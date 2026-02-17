@@ -37,6 +37,12 @@
   gap: 8px;
 }
 
+/* Enforce tab order: Home, Instructions, Workout, My Climbs */
+.nav-links a:nth-child(1) { order: 1; }
+.nav-links a:nth-child(2) { order: 2; }
+.nav-links a:nth-child(3) { order: 3; }
+.nav-links a:nth-child(4) { order: 4; }
+
 .nav-links a {
   padding: 8px 16px;
   border-radius: var(--radius-sm);
