@@ -1,7 +1,7 @@
 {
   "id": "tavor",
   "name": "Tavor",
-  "dev": true,
+  "dev": false,
   "base_width": 15,
   "base_height": 25,
   "aspect_ratio": 1.5,
