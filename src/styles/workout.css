@@ -52,23 +52,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  padding: 8px 16px;
+  gap: 20px;
+  padding: 20px 24px;
+  min-height: 72px;
   background: rgba(0, 0, 0, 0.75);
 }
 
 .workout-climbing-timer {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 700;
   color: var(--color-text);
   font-variant-numeric: tabular-nums;
-  margin-right: 8px;
+  margin-right: 12px;
 }
 
 .workout-climbing-controls .start-stop-btn,
 .workout-climbing-controls .reset-btn {
-  padding: 12px 24px;
-  font-size: 1rem;
+  padding: 18px 32px;
+  font-size: 1.15rem;
+  min-height: 52px;
 }
 
 .workout-page .welcome {

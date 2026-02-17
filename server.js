@@ -1,4 +1,16 @@
 const path = require("path");
+const fs = require("fs");
+
+// Load env.txt into process.env when present (e.g. local dev with npm start)
+const envPath = path.join(__dirname, "env.txt");
+if (fs.existsSync(envPath)) {
+  const content = fs.readFileSync(envPath, "utf8");
+  for (const line of content.split("\n")) {
+    const m = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/);
+    if (m) process.env[m[1].trim()] = m[2].trim().replace(/^["']|["']$/g, "");
+  }
+}
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
@@ -7,14 +19,11 @@ const sql = require("./db/db");
 const CRUD = require("./db/CRUD-Functions");
 const cookieParser = require("cookie-parser");
 const CreateDB = require("./db/CreateDB");
-const fs = require("fs");
 const stringify = require("csv-stringify").stringify;
 const { parse } = require("csv-parse");
 const CSVToJSON = require("csvtojson");
 const BASE_URL = process.env.BASE_URL || "http://localhost:8888";
 process.env.NODE_ENV = "production";
-
-app.use(cookieParser());
 
 app.get("/CreateTable_Users", CreateDB.CreateTable_Users);
 app.get("/CreateTable_Stats", CreateDB.CreateTable_Stats);
