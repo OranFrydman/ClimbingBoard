@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { getGreeting, isLoggedIn } from '../utils/auth';
+import { getGreeting, getUser, isLoggedIn } from '../utils/auth';
 import '../styles/navigation.css';
 
 function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const [showAbout, setShowAbout] = useState(false);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -81,12 +80,18 @@ function Navigation() {
 
         <div className="nav-links">
           <NavLink to="/HomePage" end className={({ isActive }) => isActive ? 'active' : ''}>Home</NavLink>
+          <NavLink to="/Instructions" className={({ isActive }) => isActive ? 'active' : ''}>Instructions</NavLink>
           <NavLink to="/Workout" className={({ isActive }) => isActive ? 'active' : ''}>Workout</NavLink>
           <NavLink to="/Statistics" className={({ isActive }) => isActive ? 'active' : ''}>My Climbs</NavLink>
+          
         </div>
 
         <div className="nav-actions">
-          <span className="greeting">{getGreeting()}</span>
+          <span className="greeting">
+            {isLoggedIn()
+              ? `${getGreeting().replace('!', '')}, ${getUser('name')}`
+              : getGreeting()}
+          </span>
           <div className="menu-container">
             <input
               type="checkbox"
@@ -100,18 +105,22 @@ function Navigation() {
             <div className="dropdown">
               <div className="nav-mobile-links">
                 <Link to="/HomePage" className="dropdown-item" onClick={closeMenu}>Home</Link>
+                <Link to="/Instructions" className="dropdown-item" onClick={closeMenu}>Instructions</Link>
                 <Link to="/Workout" className="dropdown-item" onClick={closeMenu}>Workout</Link>
                 <Link to="/Statistics" className="dropdown-item" onClick={closeMenu}>My Climbs</Link>
+                
                 <div className="dropdown-divider" />
               </div>
-              <button type="button" className="dropdown-item" onClick={() => { setShowLogin(true); closeMenu(); }}>Sign in</button>
-              <button type="button" className="dropdown-item" onClick={() => { setShowRegister(true); closeMenu(); }}>Register</button>
-              <button type="button" className="dropdown-item" onClick={() => { setShowAbout(true); closeMenu(); }}>Instructions</button>
-              {isLoggedIn() && (
+              {isLoggedIn() ? (
                 <>
                   <div className="dropdown-divider" />
                   <button type="button" className="dropdown-item" onClick={handleDeleteClimbs}>Delete all my climbs</button>
                   <button type="button" className="dropdown-item" onClick={handleLogout}>Log out</button>
+                </>
+              ) : (
+                <>
+                  <button type="button" className="dropdown-item" onClick={() => { setShowLogin(true); closeMenu(); }}>Sign in</button>
+                  <button type="button" className="dropdown-item" onClick={() => { setShowRegister(true); closeMenu(); }}>Register</button>
                 </>
               )}
             </div>
@@ -153,7 +162,7 @@ function Navigation() {
         </div>
       )}
 
-      {showAbout && (
+      {false && (
         <div className="modal-overlay" onClick={() => setShowAbout(false)}>
           <div className="modal-content instructions" onClick={(e) => e.stopPropagation()}>
             <button type="button" className="modal-close" onClick={() => setShowAbout(false)} aria-label="Close">×</button>

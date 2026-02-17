@@ -17,6 +17,7 @@ function HomePage() {
           <p>Endurance-focused hangboard training with randomised holds. Build pump and stamina at home.</p>
           <div className="home-ctas">
             <Link to="/Workout" className="btn btn-primary">Start workout</Link>
+            <Link to="/Instructions" className="btn btn-secondary">Instructions</Link>
             <Link to="/Statistics" className="btn btn-secondary">My climbs</Link>
           </div>
         </div>
