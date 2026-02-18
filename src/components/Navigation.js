@@ -154,8 +154,10 @@ function Navigation() {
               <input type="text" id="FullName" name="FullName" required />
               <label htmlFor="UserEmail">Email</label>
               <input type="email" id="UserEmail" name="UserEmail" required />
+              <p className="form-note">Email can be fake or disposable.</p>
               <label htmlFor="Password">Password</label>
               <input type="password" id="Password" name="Password" required />
+              <p className="form-note">Passwords are not encrypted. Please use a non-meaningful password (e.g. only for this app).</p>
               <button type="submit" className="btn btn-primary">Register</button>
             </form>
           </div>
