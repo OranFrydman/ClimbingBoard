@@ -346,3 +346,60 @@
     font-size: 2.5rem;
   }
 }
+
+/* After-session modal: "Start another session?" with 10s countdown */
+.workout-after-session-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.workout-after-session-modal {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.workout-after-session-modal h2 {
+  margin: 0 0 12px;
+  font-size: 1.35rem;
+  color: var(--color-text);
+}
+
+.workout-after-session-modal > p {
+  margin: 0 0 20px;
+  color: var(--color-text-muted);
+}
+
+.workout-after-session-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.workout-after-session-buttons .btn {
+  width: 100%;
+  padding: 14px;
+}
+
+.workout-after-session-countdown {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.workout-after-session-countdown strong {
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
