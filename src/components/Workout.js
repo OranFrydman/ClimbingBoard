@@ -9,6 +9,8 @@ import { getBoardImageUrl } from '../data/boards/boardImages';
 import '../styles/workout.css';
 
 const HOLD_CHANGE_INTERVAL_MS = 4000;
+/** Seconds to wait in the "Start another session?" modal before auto-redirecting to My Climbs */
+const AFTER_SESSION_REDIRECT_SECONDS = 30;
 /** Placeholder value for "no board selected" – must not be a real board id */
 const CHOOSE_BOARD_VALUE = '__choose_board__';
 
@@ -42,6 +44,9 @@ function Workout() {
   const timerRef = useRef(null);
   const holdIntervalRef = useRef(null);
   const holdStateRef = useRef(null);
+  const [showAfterSessionModal, setShowAfterSessionModal] = useState(false);
+  const [afterSessionCountdown, setAfterSessionCountdown] = useState(AFTER_SESSION_REDIRECT_SECONDS);
+  const afterSessionIntervalRef = useRef(null);
 
   const handleBoardChange = (e) => {
     const id = e.target.value || CHOOSE_BOARD_VALUE;
@@ -160,7 +165,7 @@ function Workout() {
         credentials: 'include',
       });
       if (response.ok || response.redirected) {
-        window.location.href = '/Statistics';
+        setShowAfterSessionModal(true);
       } else {
         alert('Error saving workout. Please try again.');
       }
@@ -177,6 +182,26 @@ function Workout() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!showAfterSessionModal) return;
+    setAfterSessionCountdown(AFTER_SESSION_REDIRECT_SECONDS);
+    const id = setInterval(() => {
+      setAfterSessionCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(afterSessionIntervalRef.current);
+          window.location.href = '/Statistics';
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    afterSessionIntervalRef.current = id;
+    return () => {
+      clearInterval(id);
+      afterSessionIntervalRef.current = null;
+    };
+  }, [showAfterSessionModal]);
+
   const formatTime = (min, sec) => {
     const m = min < 10 ? '0' + min : min;
     const s = sec < 10 ? '0' + sec : sec;
@@ -185,6 +210,25 @@ function Workout() {
 
   const getLevelButtonClass = (btnLevel) =>
     selectedLevel === btnLevel ? 'grade-btn selected' : 'grade-btn';
+
+  const clearAfterSessionCountdown = () => {
+    if (afterSessionIntervalRef.current) {
+      clearInterval(afterSessionIntervalRef.current);
+      afterSessionIntervalRef.current = null;
+    }
+  };
+
+  const handleStartAnotherSession = () => {
+    clearAfterSessionCountdown();
+    setShowAfterSessionModal(false);
+    setSeconds(0);
+    setMinutes(0);
+  };
+
+  const handleGoToMyClimbs = () => {
+    clearAfterSessionCountdown();
+    window.location.href = '/Statistics';
+  };
 
   const deviceSectionStyle = board
     ? (() => {
@@ -346,6 +390,26 @@ function Workout() {
           </div>
         </div>
       </div>
+
+      {showAfterSessionModal && (
+        <div className="workout-after-session-overlay" onClick={() => {}}>
+          <div className="workout-after-session-modal" onClick={(e) => e.stopPropagation()}>
+            <h2>Session saved</h2>
+            <p>Start another session?</p>
+            <div className="workout-after-session-buttons">
+              <button type="button" className="btn btn-primary" onClick={handleStartAnotherSession}>
+                Start another session
+              </button>
+              <button type="button" className="btn btn-secondary" onClick={handleGoToMyClimbs}>
+                Go to My Climbs
+              </button>
+            </div>
+            <p className="workout-after-session-countdown">
+              Redirecting to My Climbs in <strong>{afterSessionCountdown}</strong> seconds…
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
