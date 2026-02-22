@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navigation from './Navigation';
 import '../styles/instructions.css';
+import instructionsChairImg from '../assets/instructions/instructions_chair.png';
+import instructionsClimberImg from '../assets/instructions/instructions_climber.png';
 
 function Instructions() {
   return (
@@ -21,7 +23,7 @@ function Instructions() {
           <div className="instructions-figures-row">
             <figure className="instructions-figure instructions-figure--chair">
               <img
-                src="/MEDIA/Instructions/instructions_chair.png"
+                src={instructionsChairImg}
                 alt="How to place the chair in front of the hangboard with space for your feet"
                 className="instructions-img"
               />
@@ -29,7 +31,7 @@ function Instructions() {
             </figure>
             <figure className="instructions-figure instructions-figure--climber">
               <img
-                src="/MEDIA/Instructions/instructions_climber.png"
+                src={instructionsClimberImg}
                 alt="Climber position during a hangboard session"
                 className="instructions-img"
               />
