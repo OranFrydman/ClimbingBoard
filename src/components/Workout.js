@@ -14,6 +14,19 @@ const AFTER_SESSION_REDIRECT_SECONDS = 30;
 /** Placeholder value for "no board selected" – must not be a real board id */
 const CHOOSE_BOARD_VALUE = '__choose_board__';
 
+/** Timer modes: full burn (count up until stop) vs interval (count down, auto-end) */
+const TIMER_MODE_FULL_BURN = 'full_burn';
+const TIMER_MODE_INTERVAL = 'interval';
+/** Default duration in seconds for Interval Mode (2 minutes) */
+const INTERVAL_MODE_DEFAULT_SECONDS = 120;
+const INTERVAL_MODE_MIN_SECONDS = 30;
+const INTERVAL_MODE_MAX_SECONDS = 600;
+const INTERVAL_MODE_STEP_SECONDS = 30;
+const TIMER_MODES = [
+  { id: TIMER_MODE_FULL_BURN, label: 'Full Burn', emoji: '🔥' },
+  { id: TIMER_MODE_INTERVAL, label: 'Interval Mode', emoji: '⏱️' },
+];
+
 /** Options for board dropdown: placeholder first, then real boards (order ensures "Choose Board" on load) */
 function getBoardOptions() {
   return [{ id: CHOOSE_BOARD_VALUE, name: 'Choose Board' }, ...getBoardList()];
@@ -35,6 +48,8 @@ function Workout() {
     });
     return () => { cancelled = true; };
   }, [selectedBoardId]);
+  const [timerMode, setTimerMode] = useState(TIMER_MODE_FULL_BURN);
+  const [intervalDurationSeconds, setIntervalDurationSeconds] = useState(INTERVAL_MODE_DEFAULT_SECONDS);
   const [level, setLevel] = useState(0);
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [isRunning, setIsRunning] = useState(false);
@@ -44,6 +59,7 @@ function Workout() {
   const timerRef = useRef(null);
   const holdIntervalRef = useRef(null);
   const holdStateRef = useRef(null);
+  const totalSecondsRemainingRef = useRef(null);
   const [showAfterSessionModal, setShowAfterSessionModal] = useState(false);
   const [afterSessionCountdown, setAfterSessionCountdown] = useState(AFTER_SESSION_REDIRECT_SECONDS);
   const afterSessionIntervalRef = useRef(null);
@@ -94,6 +110,38 @@ function Workout() {
     }
   };
 
+  const handleTimerModeSelect = (mode) => {
+    if (!isRunning) {
+      setTimerMode(mode);
+      if (mode === TIMER_MODE_INTERVAL) {
+        setMinutes(Math.floor(intervalDurationSeconds / 60));
+        setSeconds(intervalDurationSeconds % 60);
+      } else {
+        setMinutes(0);
+        setSeconds(0);
+      }
+    }
+  };
+
+  const getTimerModeButtonClass = (mode) =>
+    timerMode === mode ? 'timer-mode-btn selected' : 'timer-mode-btn';
+
+  const formatIntervalDuration = (totalSec) => {
+    const m = Math.floor(totalSec / 60);
+    const s = totalSec % 60;
+    return `${m}:${s < 10 ? '0' + s : s}`;
+  };
+
+  const handleIntervalDecrease = () => {
+    if (isRunning || timerMode !== TIMER_MODE_INTERVAL) return;
+    setIntervalDurationSeconds((prev) => Math.max(INTERVAL_MODE_MIN_SECONDS, prev - INTERVAL_MODE_STEP_SECONDS));
+  };
+
+  const handleIntervalIncrease = () => {
+    if (isRunning || timerMode !== TIMER_MODE_INTERVAL) return;
+    setIntervalDurationSeconds((prev) => Math.min(INTERVAL_MODE_MAX_SECONDS, prev + INTERVAL_MODE_STEP_SECONDS));
+  };
+
   const handleStartStop = () => {
     if (!board) {
       alert('Please select a board first');
@@ -107,7 +155,30 @@ function Workout() {
     if (!isRunning) {
       setIsRunning(true);
       startSession();
+      if (timerMode === TIMER_MODE_INTERVAL) {
+        totalSecondsRemainingRef.current = intervalDurationSeconds;
+        setMinutes(Math.floor(intervalDurationSeconds / 60));
+        setSeconds(intervalDurationSeconds % 60);
+      }
       timerRef.current = setInterval(() => {
+        if (timerMode === TIMER_MODE_INTERVAL) {
+          if (totalSecondsRemainingRef.current != null) {
+            totalSecondsRemainingRef.current -= 1;
+            const total = totalSecondsRemainingRef.current;
+            setMinutes(Math.floor(total / 60));
+            setSeconds(total % 60);
+            if (total <= 0) {
+              totalSecondsRemainingRef.current = null;
+              if (timerRef.current) clearInterval(timerRef.current);
+              if (holdIntervalRef.current) clearInterval(holdIntervalRef.current);
+              timerRef.current = null;
+              holdIntervalRef.current = null;
+              setIsRunning(false);
+              submitWorkoutTimedDrill();
+            }
+          }
+          return;
+        }
         setSeconds((prev) => {
           if (prev === 59) {
             setMinutes((m) => m + 1);
@@ -127,8 +198,14 @@ function Workout() {
 
   const handleReset = () => {
     setIsRunning(false);
-    setSeconds(0);
-    setMinutes(0);
+    totalSecondsRemainingRef.current = null;
+    if (timerMode === TIMER_MODE_INTERVAL) {
+      setMinutes(Math.floor(intervalDurationSeconds / 60));
+      setSeconds(intervalDurationSeconds % 60);
+    } else {
+      setMinutes(0);
+      setSeconds(0);
+    }
     setLevel(0);
     setSelectedLevel(null);
     if (timerRef.current) clearInterval(timerRef.current);
@@ -143,16 +220,33 @@ function Workout() {
     return `00:${m}:${s}`;
   };
 
-  const submitWorkout = async () => {
+  const submitWorkoutTimedDrill = () => {
+    submitWorkout(buildDuration(Math.floor(intervalDurationSeconds / 60), intervalDurationSeconds % 60));
+  };
+
+  const submitWorkout = async (durationOverride) => {
     if (!level || level === 0) {
       alert('Please select a difficulty level');
       return;
     }
-    if (minutes === 0 && seconds === 0) {
-      alert('Workout duration cannot be zero');
-      return;
+    let duration;
+    if (durationOverride != null) {
+      duration = durationOverride;
+    } else if (timerMode === TIMER_MODE_INTERVAL) {
+      const remainingSec = minutes * 60 + seconds;
+      const elapsedSec = Math.max(0, intervalDurationSeconds - remainingSec);
+      if (elapsedSec === 0) {
+        duration = buildDuration(Math.floor(intervalDurationSeconds / 60), intervalDurationSeconds % 60);
+      } else {
+        duration = buildDuration(Math.floor(elapsedSec / 60), elapsedSec % 60);
+      }
+    } else {
+      if (minutes === 0 && seconds === 0) {
+        alert('Workout duration cannot be zero');
+        return;
+      }
+      duration = buildDuration(minutes, seconds);
     }
-    const duration = buildDuration(minutes, seconds);
     const body = new URLSearchParams({
       ChosenLevel: level.toString(),
       TimeStamp: duration,
@@ -181,6 +275,13 @@ function Workout() {
       if (holdIntervalRef.current) clearInterval(holdIntervalRef.current);
     };
   }, []);
+
+  useEffect(() => {
+    if (timerMode === TIMER_MODE_INTERVAL && !isRunning) {
+      setMinutes(Math.floor(intervalDurationSeconds / 60));
+      setSeconds(intervalDurationSeconds % 60);
+    }
+  }, [timerMode, intervalDurationSeconds, isRunning]);
 
   useEffect(() => {
     if (!showAfterSessionModal) return;
@@ -221,8 +322,13 @@ function Workout() {
   const handleStartAnotherSession = () => {
     clearAfterSessionCountdown();
     setShowAfterSessionModal(false);
-    setSeconds(0);
-    setMinutes(0);
+    if (timerMode === TIMER_MODE_INTERVAL) {
+      setMinutes(Math.floor(intervalDurationSeconds / 60));
+      setSeconds(intervalDurationSeconds % 60);
+    } else {
+      setMinutes(0);
+      setSeconds(0);
+    }
   };
 
   const handleGoToMyClimbs = () => {
@@ -308,6 +414,50 @@ function Workout() {
               ))}
             </select>
           </div>
+          <div className="workout-timer-mode-row">
+            <span className="workout-timer-mode-label">Session type</span>
+            <div className="workout-timer-mode-buttons">
+              {TIMER_MODES.map((mode) => (
+                <button
+                  key={mode.id}
+                  type="button"
+                  className={getTimerModeButtonClass(mode.id)}
+                  onClick={() => handleTimerModeSelect(mode.id)}
+                  disabled={isRunning}
+                  aria-pressed={timerMode === mode.id}
+                >
+                  <span className="timer-mode-emoji" aria-hidden="true">{mode.emoji}</span>
+                  <span>{mode.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+          {timerMode === TIMER_MODE_INTERVAL && (
+            <div className="workout-interval-duration-row">
+              <span className="workout-interval-duration-label">Interval</span>
+              <div className="workout-interval-duration-controls">
+                <button
+                  type="button"
+                  className="workout-interval-step-btn"
+                  onClick={handleIntervalDecrease}
+                  disabled={isRunning || intervalDurationSeconds <= INTERVAL_MODE_MIN_SECONDS}
+                  aria-label="Decrease interval"
+                >
+                  −
+                </button>
+                <span className="workout-interval-duration-value">{formatIntervalDuration(intervalDurationSeconds)}</span>
+                <button
+                  type="button"
+                  className="workout-interval-step-btn"
+                  onClick={handleIntervalIncrease}
+                  disabled={isRunning || intervalDurationSeconds >= INTERVAL_MODE_MAX_SECONDS}
+                  aria-label="Increase interval"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          )}
           <div className="workout-controls-row">
             <div className="grades-section">
               <button
@@ -343,14 +493,6 @@ function Workout() {
                 disabled={!board}
               >
                 <span>{isRunning ? 'Stop Climbing' : 'Start Climbing'}</span>
-              </button>
-              <button
-                type="button"
-                className="reset-btn"
-                onClick={handleReset}
-                disabled={isRunning}
-              >
-                Reset Clock
               </button>
             </div>
           </div>
