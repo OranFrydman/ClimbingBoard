@@ -12,6 +12,7 @@
     "medium": 6,
     "hard": 1
   },
+  "crossMoveXThreshold": -10,
   "holds": [
     {"index":0,"difficulty":7,"type":"Full","position":{"x":0.75,"y":6,"width":2.55,"height":2.7143}},
     {"index":1,"difficulty":7,"type":"Full","position":{"x":3.3,"y":6,"width":2.55,"height":2.7143}},

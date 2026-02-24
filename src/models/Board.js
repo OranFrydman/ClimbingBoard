@@ -15,8 +15,9 @@ export class Board {
    * @param {number} defaultRightIndex - Hold index for right hand at session start.
    * @param {{ easy?: number, medium?: number, hard?: number }} [levelThresholds] - Min combined difficulty per level.
    * @param {{ width?: number, height?: number }} [dimensions] - Coordinate system for hold positions (default 100×100).
+   * @param {number} [crossMoveXThreshold=0] - Min (rightHandX - leftHandX) to accept a hold change; 0 = no filter.
    */
-  constructor(id, name, holds, defaultLeftIndex, defaultRightIndex, levelThresholds = {}, dimensions = {}, dev = true) {
+  constructor(id, name, holds, defaultLeftIndex, defaultRightIndex, levelThresholds = {}, dimensions = {}, dev = true, crossMoveXThreshold = 0) {
     this._id = id;
     this._name = name;
     this._holds = holds;
@@ -27,6 +28,9 @@ export class Board {
     this._baseWidth = dimensions.base_width ?? 20;
     this._baseHeight = dimensions.base_height ?? 20;
     this._aspectRatio = dimensions.aspect_ratio ?? 1.5;
+    const n = Number(crossMoveXThreshold);
+    this._crossMoveXThreshold = (crossMoveXThreshold != null && !Number.isNaN(n)) ? n : 0;
+
   }
 
   get id() {
@@ -109,6 +113,11 @@ export class Board {
     return this._thresholds[key] ?? 1;
   }
 
+  /** Min (rightHandX - leftHandX) to accept a hold change; 0 = no filter. */
+  get crossMoveXThreshold() {
+    return this._crossMoveXThreshold;
+  }
+
   /** @returns {Hold} */
   getDefaultLeftHold() {
     return this.getHoldByIndex(this._defaultLeftIndex);
@@ -144,7 +153,8 @@ export class Board {
       data.defaultRightIndex ?? 0,
       data.levelThresholds,
       dimensions,
-      data.dev !== false
+      data.dev !== false,
+      data.cross_move_x_threshold ?? 0
     );
   }
 }

@@ -359,13 +359,17 @@ function Workout() {
             {board?.holds?.map((hold) => {
               const showHold = board.dev || visibleHolds[hold.displayId];
               if (!showHold) return null;
+              const state = holdStateRef.current;
+              const isLeft = state && state.leftIndex === hold.index;
+              const isRight = state && state.rightIndex === hold.index;
+              const handClass = (isLeft ? ' holds--left' : '') + (isRight ? ' holds--right' : '');
               const visual = getHoldVisual(hold.type, board.id);
               const style = board.positionToPercent(hold.position);
               return (
                 <div
                   key={hold.displayId}
                   id={hold.displayId}
-                  className={`holds${hold.type === 'Mono' ? ' holds--mono' : ''}`}
+                  className={`holds${hold.type === 'Mono' ? ' holds--mono' : ''}${handClass}`}
                   style={style}
                 >
                   <div className={`hold-shape hold-shape--${visual.shape}`} aria-hidden="true" />
@@ -375,6 +379,16 @@ function Workout() {
             })}
           </div>
         </div>
+        </div>
+        <div className="workout-legend workout-legend--climbing" aria-hidden="true">
+          <span className="workout-legend-item">
+            <span className="workout-legend-dot workout-legend-dot--left" />
+            Left hand
+          </span>
+          <span className="workout-legend-item">
+            <span className="workout-legend-dot workout-legend-dot--right" />
+            Right hand
+          </span>
         </div>
         <div className="workout-climbing-controls">
           <span className="workout-climbing-timer">{formatTime(minutes, seconds)}</span>
@@ -513,13 +527,17 @@ function Workout() {
                 {board.holds.map((hold) => {
                   const showHold = board.dev || (isRunning && visibleHolds[hold.displayId]);
                   if (!showHold) return null;
+                  const state = holdStateRef.current;
+                  const isLeft = state && state.leftIndex === hold.index;
+                  const isRight = state && state.rightIndex === hold.index;
+                  const handClass = (isLeft ? ' holds--left' : '') + (isRight ? ' holds--right' : '');
                   const visual = getHoldVisual(hold.type, board.id);
                   const style = board.positionToPercent(hold.position);
                   return (
                     <div
                       key={hold.displayId}
                       id={hold.displayId}
-                      className={`holds${hold.type === 'Mono' ? ' holds--mono' : ''}`}
+                      className={`holds${hold.type === 'Mono' ? ' holds--mono' : ''}${handClass}`}
                       style={style}
                     >
                       <div className={`hold-shape hold-shape--${visual.shape}`} aria-hidden="true" />

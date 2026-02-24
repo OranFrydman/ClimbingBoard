@@ -24,6 +24,7 @@
 export function computeNextHoldChange(board, level, state) {
   const holdCount = board.holdCount;
   const minScore = board.getMinScoreForLevel(level);
+  const crossMoveXThreshold = board.crossMoveXThreshold ?? 0;
   const { leftIndex, rightIndex, leftDifficulty, rightDifficulty, prob } = state;
 
   const maxAttempts = holdCount * 2;
@@ -32,16 +33,21 @@ export function computeNextHoldChange(board, level, state) {
     const side = Math.random();
 
     if (holdIndex === leftIndex || holdIndex === rightIndex) {
-      return { ...state, changed: false };
+      console.log('[results] hold rejected - same index');
+      continue;
     }
-
+    
     const hold = board.getHoldByIndex(holdIndex);
     if (!hold) continue;
 
     const newDifficulty = hold.difficulty;
-
     if (prob + side < 0.5) {
+      const leftHold = board.getHoldByIndex(leftIndex);
+      const xDiff = (hold.position?.x ?? 0) - (leftHold?.position?.x ?? 0);
       if (newDifficulty + leftDifficulty >= minScore) {
+        if (xDiff < crossMoveXThreshold) {
+          continue;
+        }
         return {
           leftIndex,
           rightIndex: holdIndex,
@@ -52,7 +58,13 @@ export function computeNextHoldChange(board, level, state) {
         };
       }
     } else {
+      const rightHold = board.getHoldByIndex(rightIndex);
+      const xDiff = (rightHold?.position?.x ?? 0) - (hold.position?.x ?? 0);
       if (newDifficulty + rightDifficulty >= minScore) {
+        if (xDiff < crossMoveXThreshold) {
+          continue;
+        }
+        
         return {
           leftIndex: holdIndex,
           rightIndex,
@@ -64,7 +76,6 @@ export function computeNextHoldChange(board, level, state) {
       }
     }
   }
-
   return { ...state, changed: false };
 }
 

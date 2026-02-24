@@ -29,6 +29,7 @@ export async function fetchBoard(id) {
     const res = await fetch(`/api/board/${targetId}?t=${Date.now()}`);
     if (!res.ok) throw new Error('Not found');
     const config = await res.json();
+    console.log(Board.fromData(config));
     return Board.fromData(config);
   } catch {
     const config = BOARD_CONFIGS[targetId];
