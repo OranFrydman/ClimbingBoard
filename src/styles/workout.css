@@ -418,13 +418,13 @@
   background-image: none;
 }
 
-/* Metolius Project board: show image larger */
-.device-section[data-board-id="metolius_project"] {
-  background-size: 100%;
+.workout-climbing-board[data-board-id="metolius_project"]
+ {
+  background-size: 110%;
 }
 
-.workout-climbing-board[data-board-id="metolius_project"] {
-  background-size: 110%;
+.workout-climbing-board[data-board-id="metolius_deluxe2"] {
+  background-size: 140%;
 }
 
 .device-empty {

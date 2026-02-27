@@ -1,0 +1,48 @@
+{
+  "id": "metolius_deluxe2",
+  "name": "Metolius Deluxe 2",
+  "dev": false,
+  "base_width": 15,
+  "base_height": 25,
+  "aspect_ratio": 1.5,
+  "defaultLeftIndex": 0,
+  "defaultRightIndex": 4,
+  "levelThresholds": {
+    "easy": 10,
+    "medium": 6,
+    "hard": 1
+  },
+  "cross_move_x_threshold": -10,
+  "holds": [
+    {"index":0,"difficulty":10,"type":"Full","position":{"x":0,"y":5,"width":2.5,"height":2.7}},
+    {"index":1,"difficulty":6,"type":"Full","position":{"x":2.5,"y":5,"width":2.5,"height":2.7}},
+    {"index":2,"difficulty":6,"type":"Full","position":{"x":5,"y":5,"width":2.5,"height":2.7}},
+    {"index":3,"difficulty":6,"type":"Full","position":{"x":7.5,"y":5,"width":2.5,"height":2.7}},
+    {"index":4,"difficulty":6,"type":"Full","position":{"x":10,"y":5,"width":2.5,"height":2.7}},
+    {"index":5,"difficulty":10,"type":"Full","position":{"x":12.45,"y":5,"width":2.5,"height":2.7}},
+
+    {"index":6,"difficulty":8,"type":"Full","position":{"x":0.25,"y":8.5,"width":2.5,"height":2.7}}, 
+    {"index":7,"difficulty":6,"type":"Tree","position":{"x":2.7,"y":9,"width":2.25,"height":2}},
+    {"index":8,"difficulty":4,"type":"Dou","position":{"x":4.5,"y":9,"width":2,"height":2}},
+    {"index":9,"difficulty":6,"type":"Tree","position":{"x":6,"y":9,"width":3,"height":2}},
+    {"index":10,"difficulty":4,"type":"Dou","position":{"x":8.5,"y":9,"width":2,"height":2}},
+    {"index":11,"difficulty":6,"type":"Tree","position":{"x":10,"y":9,"width":2.25,"height":2}},
+    {"index":12,"difficulty":8,"type":"Full","position":{"x":12.25,"y":8.5,"width":2,"height":2.7}},
+
+    {"index":13,"difficulty":6,"type":"Full","position":{"x":0.4,"y":11.75,"width":2.5,"height":2.7}}, 
+    {"index":14,"difficulty":4,"type":"Tree","position":{"x":2.8,"y":12.25,"width":2.25,"height":2}},
+    {"index":15,"difficulty":2,"type":"Dou","position":{"x":4.6,"y":12.25,"width":2,"height":2}},
+    {"index":16,"difficulty":4,"type":"Tree","position":{"x":6,"y":12.25,"width":3,"height":2}},
+    {"index":17,"difficulty":2,"type":"Dou","position":{"x":8.4,"y":12.25,"width":2,"height":2}},
+    {"index":18,"difficulty":4,"type":"Tree","position":{"x":9.9,"y":12.25,"width":2.25,"height":2}},
+    {"index":19,"difficulty":6,"type":"Full","position":{"x":12.05,"y":11.75,"width":2,"height":2.7}},
+
+    {"index":20,"difficulty":4,"type":"Full","position":{"x":0.5,"y":15,"width":2.5,"height":2.7}}, 
+    {"index":21,"difficulty":2,"type":"Tree","position":{"x":2.9,"y":16,"width":2.25,"height":2}},
+    {"index":22,"difficulty":1,"type":"Dou","position":{"x":4.6,"y":16,"width":2,"height":2}},
+    {"index":23,"difficulty":4,"type":"Tree","position":{"x":6,"y":16,"width":3,"height":2}},
+    {"index":24,"difficulty":1,"type":"Dou","position":{"x":8.4,"y":16,"width":2,"height":2}},
+    {"index":25,"difficulty":2,"type":"Tree","position":{"x":9.8,"y":16,"width":2.25,"height":2}},
+    {"index":26,"difficulty":4,"type":"Full","position":{"x":12,"y":15,"width":2,"height":2.7}}
+  ]
+}

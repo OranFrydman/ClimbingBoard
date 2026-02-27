@@ -9,6 +9,7 @@ export const BOARD_IMAGES = {
   beastmaker1000: `${BOARDS_MEDIA}/BeastMaker1000Board.png`,
   beastmaker2000: `${BOARDS_MEDIA}/BeastMaker2000Board.png`,
   metolius_project: `${BOARDS_MEDIA}/MetoliusProjectBoard.png`,
+  metolius_deluxe2: `${BOARDS_MEDIA}/MetoliusDeluxe2.png`,
 };
 
 /**
