@@ -3,12 +3,14 @@ import tavorConfig from './tavor.json';
 import beastmaker1000Config from './beastmaker1000.json';
 import beastmaker2000Config from './beastmaker2000.json';
 import metolius_projectConfig from './metolius_project.json';
+import metolius_deluxe2Config from './metolius_deluxe2.json';
 
 const BOARD_CONFIGS = {
   tavor: tavorConfig,
   beastmaker1000: beastmaker1000Config,
   beastmaker2000: beastmaker2000Config,
   metolius_project: metolius_projectConfig,
+  metolius_deluxe2: metolius_deluxe2Config,
 };
 
 export const DEFAULT_BOARD_ID = 'tavor';
