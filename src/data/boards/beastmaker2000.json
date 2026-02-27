@@ -1,7 +1,7 @@
 {
     "id": "beastmaker2000",
     "name": "BeastMaker 2000",
-    "dev": true,
+    "dev": false,
     "base_width": 15,
     "base_height": 25,
     "aspect_ratio": 1.5,

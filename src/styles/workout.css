@@ -380,14 +380,14 @@
 
 .workout-legend-dot--left {
   background: transparent;
-  border-color: #16a34a;
-  color: #16a34a;
+  border-color: var(--hold-left-color, #16a34a);
+  color: var(--hold-left-color, #16a34a);
 }
 
 .workout-legend-dot--right {
   background: transparent;
-  border-color: #2563eb;
-  color: #2563eb;
+  border-color: var(--hold-right-color, #2563eb);
+  color: var(--hold-right-color, #2563eb);
 }
 
 .workout-legend--climbing {
@@ -416,6 +416,15 @@
 
 .device-section.device-section--no-board {
   background-image: none;
+}
+
+/* Metolius Project board: show image larger */
+.device-section[data-board-id="metolius_project"] {
+  background-size: 100%;
+}
+
+.workout-climbing-board[data-board-id="metolius_project"] {
+  background-size: 110%;
 }
 
 .device-empty {
@@ -449,7 +458,7 @@
   position: absolute;
   font-size: 0.65em;
   font-weight: 700;
-  color: rgba(0, 0, 0, 0.7);
+  color: var(--hold-index-color, rgba(0, 0, 0, 0.7));
   pointer-events: none;
   z-index: 3;
 }
@@ -470,28 +479,28 @@
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
 }
 
-/* Left hand = green, right hand = blue (right overrides when both on same hold) */
+/* Left/right hand colors (from board JSON or defaults) */
 .holds--left .hold-shape {
-  border-color: #16a34a;
+  border-color: var(--hold-left-color, #16a34a);
 }
 
 .holds--right .hold-shape {
-  border-color: #2563eb;
+  border-color: var(--hold-right-color, #2563eb);
 }
 
 .hold-shape--mono {
   width: 45%;
   height: 45%;
   border-radius: 50%;
-  border-color: #16a34a;
+  border-color: var(--hold-left-color, #16a34a);
 }
 
 .holds--left .hold-shape--mono {
-  border-color: #16a34a;
+  border-color: var(--hold-left-color, #16a34a);
 }
 
 .holds--right .hold-shape--mono {
-  border-color: #2563eb;
+  border-color: var(--hold-right-color, #2563eb);
 }
 
 .hold-shape--dou {
