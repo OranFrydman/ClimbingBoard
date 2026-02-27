@@ -16,8 +16,11 @@ export class Board {
    * @param {{ easy?: number, medium?: number, hard?: number }} [levelThresholds] - Min combined difficulty per level.
    * @param {{ width?: number, height?: number }} [dimensions] - Coordinate system for hold positions (default 100×100).
    * @param {number} [crossMoveXThreshold=0] - Min (rightHandX - leftHandX) to accept a hold change; 0 = no filter.
+   * @param {string} [indexColor] - CSS color for hold index numbers when dev=true (e.g. '#fff' or 'rgba(0,0,0,0.8)').
+   * @param {string} [leftHandColor] - CSS color for left-hand hold marker (e.g. '#16a34a').
+   * @param {string} [rightHandColor] - CSS color for right-hand hold marker (e.g. '#2563eb').
    */
-  constructor(id, name, holds, defaultLeftIndex, defaultRightIndex, levelThresholds = {}, dimensions = {}, dev = true, crossMoveXThreshold = 0) {
+  constructor(id, name, holds, defaultLeftIndex, defaultRightIndex, levelThresholds = {}, dimensions = {}, dev = true, crossMoveXThreshold = 0, indexColor = null, leftHandColor = null, rightHandColor = null) {
     this._id = id;
     this._name = name;
     this._holds = holds;
@@ -30,7 +33,9 @@ export class Board {
     this._aspectRatio = dimensions.aspect_ratio ?? 1.5;
     const n = Number(crossMoveXThreshold);
     this._crossMoveXThreshold = (crossMoveXThreshold != null && !Number.isNaN(n)) ? n : 0;
-
+    this._indexColor = indexColor && String(indexColor).trim() ? String(indexColor).trim() : null;
+    this._leftHandColor = leftHandColor && String(leftHandColor).trim() ? String(leftHandColor).trim() : null;
+    this._rightHandColor = rightHandColor && String(rightHandColor).trim() ? String(rightHandColor).trim() : null;
   }
 
   get id() {
@@ -118,6 +123,21 @@ export class Board {
     return this._crossMoveXThreshold;
   }
 
+  /** CSS color for hold index numbers when dev=true; null = use default. */
+  get indexColor() {
+    return this._indexColor;
+  }
+
+  /** CSS color for left-hand hold marker; null = use default. */
+  get leftHandColor() {
+    return this._leftHandColor;
+  }
+
+  /** CSS color for right-hand hold marker; null = use default. */
+  get rightHandColor() {
+    return this._rightHandColor;
+  }
+
   /** @returns {Hold} */
   getDefaultLeftHold() {
     return this.getHoldByIndex(this._defaultLeftIndex);
@@ -154,7 +174,10 @@ export class Board {
       data.levelThresholds,
       dimensions,
       data.dev !== false,
-      data.cross_move_x_threshold ?? 0
+      data.cross_move_x_threshold ?? 0,
+      data.index_color ?? null,
+      data.left_hand_color ?? null,
+      data.right_hand_color ?? null
     );
   }
 }

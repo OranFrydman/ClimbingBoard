@@ -343,17 +343,28 @@ function Workout() {
         if (board.aspectRatio) {
           style['--aspect'] = String(board.aspectRatio);
         }
+        if (board.indexColor) style['--hold-index-color'] = board.indexColor;
+        if (board.leftHandColor) style['--hold-left-color'] = board.leftHandColor;
+        if (board.rightHandColor) style['--hold-right-color'] = board.rightHandColor;
         return Object.keys(style).length ? style : undefined;
       })()
     : undefined;
 
   if (isRunning) {
+    const climbingScreenStyle = board && (board.indexColor || board.leftHandColor || board.rightHandColor)
+      ? {
+          ...(board.indexColor && { '--hold-index-color': board.indexColor }),
+          ...(board.leftHandColor && { '--hold-left-color': board.leftHandColor }),
+          ...(board.rightHandColor && { '--hold-right-color': board.rightHandColor }),
+        }
+      : undefined;
     const climbingScreen = (
-      <div className="workout-climbing-screen">
+      <div className="workout-climbing-screen" style={climbingScreenStyle}>
         <div className="workout-climbing-board-wrap">
           <div
             className="workout-climbing-board"
             style={deviceSectionStyle}
+            data-board-id={board?.id}
           >
           <div className="device-container device-container--fullscreen">
             {board?.holds?.map((hold) => {
@@ -516,6 +527,7 @@ function Workout() {
           key={board?.id ?? 'no-board'}
           className={`device-section${!board ? ' device-section--no-board' : ''}`}
           style={deviceSectionStyle}
+          data-board-id={board?.id}
         >
           <div className="device-container">
             {!board ? (

@@ -8,6 +8,7 @@ export const BOARD_IMAGES = {
   tavor: `${BOARDS_MEDIA}/TavorClimbingBoard.png`,
   beastmaker1000: `${BOARDS_MEDIA}/BeastMaker1000Board.png`,
   beastmaker2000: `${BOARDS_MEDIA}/BeastMaker2000Board.png`,
+  metolius_project: `${BOARDS_MEDIA}/MetoliusProjectBoard.png`,
 };
 
 /**
