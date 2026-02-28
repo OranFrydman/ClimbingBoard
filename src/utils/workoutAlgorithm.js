@@ -46,7 +46,9 @@ function isEligibleToReplaceHold({
     ? newDifficulty + leftDifficulty
     : newDifficulty + rightDifficulty;
 
-  if (combinedDifficulty < minScore) return false;
+  if (combinedDifficulty < minScore) 
+    // console.log('reject hold - combined difficulty too hard');
+    return false;
   if (xDiff < crossMoveXThreshold) {
     // console.log('reject hold - cross too long');
     return false;
@@ -84,7 +86,7 @@ export function computeNextHoldChange(board, level, state) {
   const { leftIndex, rightIndex, leftDifficulty, rightDifficulty, prob } = state;
   const leftHold = board.getHoldByIndex(leftIndex);
   const rightHold = board.getHoldByIndex(rightIndex);
-  var current_xDiff = (rightHold?.position?.x ?? 0) - (leftHold?.position?.x ?? 0);
+  var current_xDiff = (rightHold?.position?.x) - (leftHold?.position?.x);
   var cross_event = current_xDiff < 0;
   const maxAttempts = holdCount * 2;
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
