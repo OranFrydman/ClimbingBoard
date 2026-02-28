@@ -4,6 +4,7 @@ import beastmaker1000Config from './beastmaker1000.json';
 import beastmaker2000Config from './beastmaker2000.json';
 import metolius_projectConfig from './metolius_project.json';
 import metolius_deluxe2Config from './metolius_deluxe2.json';
+import metolius_simulatorConfig from './metolius_simulator.json';
 
 const BOARD_CONFIGS = {
   tavor: tavorConfig,
@@ -11,6 +12,7 @@ const BOARD_CONFIGS = {
   beastmaker2000: beastmaker2000Config,
   metolius_project: metolius_projectConfig,
   metolius_deluxe2: metolius_deluxe2Config,
+  metolius_simulator: metolius_simulatorConfig,
 };
 
 export const DEFAULT_BOARD_ID = 'tavor';
@@ -33,7 +35,6 @@ export async function fetchBoard(id) {
     const res = await fetch(`/api/board/${targetId}?t=${Date.now()}`);
     if (!res.ok) throw new Error('Not found');
     const config = await res.json();
-    console.log(Board.fromData(config));
     return Board.fromData(config);
   } catch {
     const config = BOARD_CONFIGS[targetId];
