@@ -8,9 +8,11 @@ import { getHoldVisual } from '../data/holdVisuals';
 import { getBoardImageUrl } from '../data/boards/boardImages';
 import '../styles/workout.css';
 
-const HOLD_CHANGE_INTERVAL_MS = 2000;
+const HOLD_CHANGE_INTERVAL_MS = 4000;
 /** Seconds to wait in the "Start another session?" modal before auto-redirecting to My Climbs */
 const AFTER_SESSION_REDIRECT_SECONDS = 30;
+/** Countdown seconds before session starts after clicking Start Climbing */
+const START_COUNTDOWN_SECONDS = 5;
 /** Placeholder value for "no board selected" – must not be a real board id */
 const CHOOSE_BOARD_VALUE = '__choose_board__';
 
@@ -63,6 +65,9 @@ function Workout() {
   const [showAfterSessionModal, setShowAfterSessionModal] = useState(false);
   const [afterSessionCountdown, setAfterSessionCountdown] = useState(AFTER_SESSION_REDIRECT_SECONDS);
   const afterSessionIntervalRef = useRef(null);
+  const [startCountdown, setStartCountdown] = useState(null);
+  const lastClimbDurationSecondsRef = useRef(0);
+  const [restCountdown, setRestCountdown] = useState(null);
 
   const handleBoardChange = (e) => {
     const id = e.target.value || CHOOSE_BOARD_VALUE;
@@ -93,6 +98,44 @@ function Workout() {
     const initial = getInitialHoldState(board, level);
     holdStateRef.current = initial;
     applyHoldStateToVisible(initial);
+  };
+
+  const beginSession = () => {
+    startSession();
+    setIsRunning(true);
+    if (timerMode === TIMER_MODE_INTERVAL) {
+      totalSecondsRemainingRef.current = intervalDurationSeconds;
+      setMinutes(Math.floor(intervalDurationSeconds / 60));
+      setSeconds(intervalDurationSeconds % 60);
+    }
+    timerRef.current = setInterval(() => {
+      if (timerMode === TIMER_MODE_INTERVAL) {
+        if (totalSecondsRemainingRef.current != null) {
+          totalSecondsRemainingRef.current -= 1;
+          const total = totalSecondsRemainingRef.current;
+          setMinutes(Math.floor(total / 60));
+          setSeconds(total % 60);
+          if (total <= 0) {
+            totalSecondsRemainingRef.current = null;
+            if (timerRef.current) clearInterval(timerRef.current);
+            if (holdIntervalRef.current) clearInterval(holdIntervalRef.current);
+            timerRef.current = null;
+            holdIntervalRef.current = null;
+            setIsRunning(false);
+            submitWorkoutTimedDrill();
+          }
+        }
+        return;
+      }
+      setSeconds((prev) => {
+        if (prev === 59) {
+          setMinutes((m) => m + 1);
+          return 0;
+        }
+        return prev + 1;
+      });
+    }, 1000);
+    holdIntervalRef.current = setInterval(tickHoldChange, HOLD_CHANGE_INTERVAL_MS);
   };
 
   const tickHoldChange = () => {
@@ -153,41 +196,7 @@ function Workout() {
     }
 
     if (!isRunning) {
-      setIsRunning(true);
-      startSession();
-      if (timerMode === TIMER_MODE_INTERVAL) {
-        totalSecondsRemainingRef.current = intervalDurationSeconds;
-        setMinutes(Math.floor(intervalDurationSeconds / 60));
-        setSeconds(intervalDurationSeconds % 60);
-      }
-      timerRef.current = setInterval(() => {
-        if (timerMode === TIMER_MODE_INTERVAL) {
-          if (totalSecondsRemainingRef.current != null) {
-            totalSecondsRemainingRef.current -= 1;
-            const total = totalSecondsRemainingRef.current;
-            setMinutes(Math.floor(total / 60));
-            setSeconds(total % 60);
-            if (total <= 0) {
-              totalSecondsRemainingRef.current = null;
-              if (timerRef.current) clearInterval(timerRef.current);
-              if (holdIntervalRef.current) clearInterval(holdIntervalRef.current);
-              timerRef.current = null;
-              holdIntervalRef.current = null;
-              setIsRunning(false);
-              submitWorkoutTimedDrill();
-            }
-          }
-          return;
-        }
-        setSeconds((prev) => {
-          if (prev === 59) {
-            setMinutes((m) => m + 1);
-            return 0;
-          }
-          return prev + 1;
-        });
-      }, 1000);
-      holdIntervalRef.current = setInterval(tickHoldChange, HOLD_CHANGE_INTERVAL_MS);
+      setStartCountdown(START_COUNTDOWN_SECONDS);
     } else {
       setIsRunning(false);
       if (timerRef.current) clearInterval(timerRef.current);
@@ -230,21 +239,27 @@ function Workout() {
       return;
     }
     let duration;
+    let durationSeconds;
     if (durationOverride != null) {
       duration = durationOverride;
+      durationSeconds = timerMode === TIMER_MODE_INTERVAL
+        ? intervalDurationSeconds
+        : minutes * 60 + seconds;
     } else if (timerMode === TIMER_MODE_INTERVAL) {
       const remainingSec = minutes * 60 + seconds;
-      const elapsedSec = Math.max(0, intervalDurationSeconds - remainingSec);
-      if (elapsedSec === 0) {
+      durationSeconds = Math.max(0, intervalDurationSeconds - remainingSec);
+      if (durationSeconds === 0) {
         duration = buildDuration(Math.floor(intervalDurationSeconds / 60), intervalDurationSeconds % 60);
+        durationSeconds = intervalDurationSeconds;
       } else {
-        duration = buildDuration(Math.floor(elapsedSec / 60), elapsedSec % 60);
+        duration = buildDuration(Math.floor(durationSeconds / 60), durationSeconds % 60);
       }
     } else {
       if (minutes === 0 && seconds === 0) {
         alert('Workout duration cannot be zero');
         return;
       }
+      durationSeconds = minutes * 60 + seconds;
       duration = buildDuration(minutes, seconds);
     }
     const body = new URLSearchParams({
@@ -259,6 +274,7 @@ function Workout() {
         credentials: 'include',
       });
       if (response.ok || response.redirected) {
+        lastClimbDurationSecondsRef.current = durationSeconds;
         setShowAfterSessionModal(true);
       } else {
         alert('Error saving workout. Please try again.');
@@ -282,6 +298,25 @@ function Workout() {
       setSeconds(intervalDurationSeconds % 60);
     }
   }, [timerMode, intervalDurationSeconds, isRunning]);
+
+  useEffect(() => {
+    if (startCountdown == null) return;
+    if (startCountdown === 0) {
+      beginSession();
+      setStartCountdown(null);
+      return;
+    }
+    const id = setTimeout(() => setStartCountdown((prev) => prev - 1), 1000);
+    return () => clearTimeout(id);
+  }, [startCountdown]);
+
+  useEffect(() => {
+    if (restCountdown == null || restCountdown <= 0) return;
+    const id = setTimeout(() => {
+      setRestCountdown((prev) => (prev <= 1 ? null : prev - 1));
+    }, 1000);
+    return () => clearTimeout(id);
+  }, [restCountdown]);
 
   useEffect(() => {
     if (!showAfterSessionModal) return;
@@ -309,6 +344,12 @@ function Workout() {
     return `${m} : ${s}`;
   };
 
+  const formatRestCountdown = (totalSec) => {
+    const m = Math.floor(totalSec / 60);
+    const s = totalSec % 60;
+    return `${m}:${s < 10 ? '0' + s : s}`;
+  };
+
   const getLevelButtonClass = (btnLevel) =>
     selectedLevel === btnLevel ? 'grade-btn selected' : 'grade-btn';
 
@@ -322,6 +363,9 @@ function Workout() {
   const handleStartAnotherSession = () => {
     clearAfterSessionCountdown();
     setShowAfterSessionModal(false);
+    const climbSeconds = lastClimbDurationSecondsRef.current || 0;
+    const restSeconds = Math.max(0, climbSeconds * 2);
+    setRestCountdown(restSeconds);
     if (timerMode === TIMER_MODE_INTERVAL) {
       setMinutes(Math.floor(intervalDurationSeconds / 60));
       setSeconds(intervalDurationSeconds % 60);
@@ -349,6 +393,9 @@ function Workout() {
         return Object.keys(style).length ? style : undefined;
       })()
     : undefined;
+
+  const isCountdownActive = startCountdown != null;
+  const isRestActive = restCountdown != null;
 
   if (isRunning) {
     const climbingScreenStyle = board && (board.indexColor || board.leftHandColor || board.rightHandColor)
@@ -418,6 +465,25 @@ function Workout() {
   return (
     <div className="workout-page">
       <Navigation />
+      {isCountdownActive && (
+        <div className="workout-countdown-overlay">
+          <div className="workout-countdown-number">{startCountdown}</div>
+          <p className="workout-countdown-label">Get ready!</p>
+        </div>
+      )}
+      {restCountdown != null && restCountdown > 0 && (
+        <div className="workout-rest-overlay">
+          <div className="workout-rest-number">{formatRestCountdown(restCountdown)}</div>
+          <p className="workout-rest-label">Rest before next session</p>
+          <button
+            type="button"
+            className="workout-rest-cancel-btn"
+            onClick={() => setRestCountdown(null)}
+          >
+            Skip rest
+          </button>
+        </div>
+      )}
       <div className="page-content">
         <h1 className="welcome">Welcome, {userName}</h1>
 
@@ -429,7 +495,7 @@ function Workout() {
               className="board-select"
               value={selectedBoardId}
               onChange={handleBoardChange}
-              disabled={isRunning}
+              disabled={isRunning || isCountdownActive || isRestActive}
               aria-label="Select board"
             >
               {boardOptions.map((opt) => (
@@ -448,7 +514,7 @@ function Workout() {
                   type="button"
                   className={getTimerModeButtonClass(mode.id)}
                   onClick={() => handleTimerModeSelect(mode.id)}
-                  disabled={isRunning}
+                  disabled={isRunning || isCountdownActive || isRestActive}
                   aria-pressed={timerMode === mode.id}
                 >
                   <span className="timer-mode-emoji" aria-hidden="true">{mode.emoji}</span>
@@ -465,7 +531,7 @@ function Workout() {
                   type="button"
                   className="workout-interval-step-btn"
                   onClick={handleIntervalDecrease}
-                  disabled={isRunning || intervalDurationSeconds <= INTERVAL_MODE_MIN_SECONDS}
+                  disabled={isRunning || isCountdownActive || isRestActive || intervalDurationSeconds <= INTERVAL_MODE_MIN_SECONDS}
                   aria-label="Decrease interval"
                 >
                   −
@@ -475,7 +541,7 @@ function Workout() {
                   type="button"
                   className="workout-interval-step-btn"
                   onClick={handleIntervalIncrease}
-                  disabled={isRunning || intervalDurationSeconds >= INTERVAL_MODE_MAX_SECONDS}
+                  disabled={isRunning || isCountdownActive || isRestActive || intervalDurationSeconds >= INTERVAL_MODE_MAX_SECONDS}
                   aria-label="Increase interval"
                 >
                   +
@@ -488,21 +554,21 @@ function Workout() {
               <button
                 className={getLevelButtonClass(1)}
                 onClick={() => handleLevelSelect(1)}
-                disabled={isRunning}
+                disabled={isRunning || isCountdownActive || isRestActive}
               >
                 <span>Easy</span>
               </button>
               <button
                 className={getLevelButtonClass(2)}
                 onClick={() => handleLevelSelect(2)}
-                disabled={isRunning}
+                disabled={isRunning || isCountdownActive || isRestActive}
               >
                 <span>Medium</span>
               </button>
               <button
                 className={getLevelButtonClass(3)}
                 onClick={() => handleLevelSelect(3)}
-                disabled={isRunning}
+                disabled={isRunning || isCountdownActive || isRestActive}
               >
                 <span>Hard</span>
               </button>
@@ -515,7 +581,7 @@ function Workout() {
                 type="button"
                 className={`start-stop-btn ${isRunning ? 'running' : ''}`}
                 onClick={handleStartStop}
-                disabled={!board}
+                disabled={!board || isCountdownActive || isRestActive}
               >
                 <span>{isRunning ? 'Stop Climbing' : 'Start Climbing'}</span>
               </button>
