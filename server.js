@@ -69,7 +69,7 @@ app.get("/LogOut", CRUD.LogOut);
 // Serve board config JSON from source – always fresh, no rebuild needed
 app.get("/api/board/:id", (req, res) => {
   const id = req.params.id;
-  const safeId = id.replace(/[^a-z0-9]/gi, "");
+  const safeId = id.replace(/[^a-z0-9_]/gi, "");
   const filePath = path.join(__dirname, "src", "data", "boards", `${safeId}.json`);
   if (!fs.existsSync(filePath)) return res.status(404).json({ error: "Board not found" });
   res.sendFile(filePath, { headers: { "Content-Type": "application/json" } });
