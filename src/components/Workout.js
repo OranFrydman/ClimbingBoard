@@ -8,7 +8,7 @@ import { getHoldVisual } from '../data/holdVisuals';
 import { getBoardImageUrl } from '../data/boards/boardImages';
 import '../styles/workout.css';
 
-const HOLD_CHANGE_INTERVAL_MS = 500;
+const HOLD_CHANGE_INTERVAL_MS = 4000;
 /** Seconds to wait in the "Start another session?" modal before auto-redirecting to My Climbs */
 const AFTER_SESSION_REDIRECT_SECONDS = 30;
 /** Countdown seconds before session starts after clicking Start Climbing */
