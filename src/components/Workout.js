@@ -8,7 +8,7 @@ import { getHoldVisual } from '../data/holdVisuals';
 import { getBoardImageUrl } from '../data/boards/boardImages';
 import '../styles/workout.css';
 
-const HOLD_CHANGE_INTERVAL_MS = 4000;
+const HOLD_CHANGE_INTERVAL_MS = 2000;
 /** Seconds to wait in the "Start another session?" modal before auto-redirecting to My Climbs */
 const AFTER_SESSION_REDIRECT_SECONDS = 30;
 /** Placeholder value for "no board selected" – must not be a real board id */

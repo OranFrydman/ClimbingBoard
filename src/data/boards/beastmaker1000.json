@@ -4,14 +4,14 @@
   "dev": false,
   "base_width": 20,
   "base_height": 20,
-  "defaultLeftIndex": 0,
-  "defaultRightIndex": 4,
+  "defaultLeftIndex":0,
+  "defaultRightIndex":4,
   "levelThresholds": {
     "easy": 10,
     "medium": 6,
     "hard": 1
   },
-  "cross_move_x_threshold": -10,
+  "cross_move_x_threshold": -8,
   "holds": [
     {"index":0,"difficulty":10,"type":"Full","position":{"x":1,"y":5.2,"width":3.61,"height":2.6}},
     {"index":1,"difficulty":-2,"type":"Tree","position":{"x":4.39,"y":5.2,"width":3.61,"height":2.6}},
