@@ -143,4 +143,18 @@ const ShowTable_Stats = (req,res)=>{
     })};
 
 
-module.exports = {CreateTable_Users,CreateTable_Stats, InsertData_Users, InsertData_Stats, ShowTable_Users,ShowTable_Stats, DropTable_Users, DropTable_Stats}
+const MigrateGoogleAuth = (req, res) => {
+  SQL.query('ALTER TABLE climbers MODIFY password VARCHAR(255) NULL', (err) => {
+    if (err && !err.message.includes('already')) {
+      return res.send('Migration step 1 failed: ' + err);
+    }
+    SQL.query('ALTER TABLE climbers ADD COLUMN google_id VARCHAR(255) NULL UNIQUE', (err2) => {
+      if (err2 && !err2.message.includes('Duplicate')) {
+        return res.send('Migration step 2 failed: ' + err2);
+      }
+      res.send('Migration complete: password is nullable, google_id column added.');
+    });
+  });
+};
+
+module.exports = {CreateTable_Users,CreateTable_Stats, InsertData_Users, InsertData_Stats, ShowTable_Users,ShowTable_Stats, DropTable_Users, DropTable_Stats, MigrateGoogleAuth}

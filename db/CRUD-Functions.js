@@ -214,6 +214,29 @@ function GetUser(req, res, field) {
   if (field == "email") return "Guest@Guest.Guest";
   if (field == "name") return "Guest";
 }
+const googleVerify = (accessToken, refreshToken, profile, done) => {
+  const email = profile.emails[0].value;
+  const googleId = profile.id;
+  const name = profile.displayName;
+
+  sql.query('SELECT * FROM climbers WHERE google_id=?', [googleId], (err, rows) => {
+    if (err) return done(err);
+    if (rows.length > 0) {
+      return done(null, { email: rows[0].email, name: rows[0].name });
+    }
+    sql.query('SELECT * FROM climbers WHERE email=?', [email], (err, rows) => {
+      if (err) return done(err);
+      if (rows.length > 0) {
+        return done(null, false);
+      }
+      sql.query('INSERT INTO climbers SET ?', { email, name, password: null, google_id: googleId }, (err) => {
+        if (err) return done(err);
+        return done(null, { email, name });
+      });
+    });
+  });
+};
+
 module.exports = {
   createNewClimber,
   Login,
@@ -222,4 +245,5 @@ module.exports = {
   PullStats,
   PullFilters,
   DeleteUser,
+  googleVerify,
 };

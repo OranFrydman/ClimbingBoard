@@ -19,6 +19,9 @@ const sql = require("./db/db");
 const CRUD = require("./db/CRUD-Functions");
 const cookieParser = require("cookie-parser");
 const CreateDB = require("./db/CreateDB");
+const session = require("express-session");
+const passport = require("passport");
+const { Strategy: GoogleStrategy } = require("passport-google-oauth20");
 const stringify = require("csv-stringify").stringify;
 const { parse } = require("csv-parse");
 const CSVToJSON = require("csvtojson");
@@ -39,6 +42,23 @@ app.get("/DropTable_Stats", CreateDB.DropTable_Stats);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(session({
+  secret: process.env.SESSION_SECRET || "cb-session-secret",
+  resave: false,
+  saveUninitialized: false,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((user, done) => done(null, user));
+
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: BASE_URL.replace(/\/$/, "") + "/auth/google/callback",
+}, CRUD.googleVerify));
 
 // Resolve dist directory: __dirname (where server.js lives) or process.cwd() for different hosts
 const distByDirname = path.join(__dirname, "dist");
@@ -65,6 +85,21 @@ app.get("/DropTable_Users", CreateDB.DropTable_Users);
 app.get("/DropTable_Stats", CreateDB.DropTable_Stats);
 
 app.get("/LogOut", CRUD.LogOut);
+app.get("/MigrateGoogleAuth", CreateDB.MigrateGoogleAuth);
+app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+app.get("/auth/google/callback", (req, res, next) => {
+  passport.authenticate("google", (err, user) => {
+    if (err) {
+      return res.redirect("/CrushView?msg=" + encodeURIComponent("Google sign-in error"));
+    }
+    if (!user) {
+      return res.redirect("/CrushView?msg=" + encodeURIComponent("This email is already registered with a password. Please sign in using your password instead."));
+    }
+    res.cookie("UserMail_C", user.email, { httpOnly: false, path: "/" });
+    res.cookie("UserName_C", user.name, { httpOnly: false, path: "/" });
+    res.redirect("/HomePage");
+  })(req, res, next);
+});
 // Do NOT add app.get("/Statistics", ...) - let the React app handle /Statistics and fetch data via /api/statistics
 // Serve board config JSON from source – always fresh, no rebuild needed
 app.get("/api/board/:id", (req, res) => {
