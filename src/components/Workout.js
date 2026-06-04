@@ -262,9 +262,12 @@ function Workout() {
       durationSeconds = minutes * 60 + seconds;
       duration = buildDuration(minutes, seconds);
     }
+    const modeLabel = TIMER_MODES.find((m) => m.id === timerMode)?.label || timerMode;
     const body = new URLSearchParams({
       ChosenLevel: level.toString(),
       TimeStamp: duration,
+      Board: board?.name || '',
+      Mode: modeLabel,
     });
     try {
       const response = await fetch('/createNewRecords', {

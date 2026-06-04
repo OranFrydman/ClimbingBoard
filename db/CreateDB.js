@@ -143,6 +143,20 @@ const ShowTable_Stats = (req,res)=>{
     })};
 
 
+const MigrateStatsV2 = (req, res) => {
+  SQL.query('ALTER TABLE stats ADD COLUMN board VARCHAR(255) NULL', (err) => {
+    if (err && !err.message.includes('Duplicate')) {
+      return res.send('Migration step 1 failed: ' + err);
+    }
+    SQL.query('ALTER TABLE stats ADD COLUMN mode VARCHAR(255) NULL', (err2) => {
+      if (err2 && !err2.message.includes('Duplicate')) {
+        return res.send('Migration step 2 failed: ' + err2);
+      }
+      res.send('Migration complete: board and mode columns added to stats.');
+    });
+  });
+};
+
 const MigrateGoogleAuth = (req, res) => {
   SQL.query('ALTER TABLE climbers MODIFY password VARCHAR(255) NULL', (err) => {
     if (err && !err.message.includes('already')) {
@@ -157,4 +171,4 @@ const MigrateGoogleAuth = (req, res) => {
   });
 };
 
-module.exports = {CreateTable_Users,CreateTable_Stats, InsertData_Users, InsertData_Stats, ShowTable_Users,ShowTable_Stats, DropTable_Users, DropTable_Stats, MigrateGoogleAuth}
+module.exports = {CreateTable_Users,CreateTable_Stats, InsertData_Users, InsertData_Stats, ShowTable_Users,ShowTable_Stats, DropTable_Users, DropTable_Stats, MigrateGoogleAuth, MigrateStatsV2}

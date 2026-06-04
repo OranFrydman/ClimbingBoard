@@ -86,6 +86,7 @@ app.get("/DropTable_Stats", CreateDB.DropTable_Stats);
 
 app.get("/LogOut", CRUD.LogOut);
 app.get("/MigrateGoogleAuth", CreateDB.MigrateGoogleAuth);
+app.get("/MigrateStatsV2", CreateDB.MigrateStatsV2);
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 app.get("/auth/google/callback", (req, res, next) => {
   passport.authenticate("google", (err, user) => {
@@ -110,6 +111,10 @@ app.get("/api/board/:id", (req, res) => {
   res.sendFile(filePath, { headers: { "Content-Type": "application/json" } });
 });
 
+app.get("/api/dashboard", (req, res) => {
+  req.headers.accept = 'application/json';
+  CRUD.getDashboardStats(req, res);
+});
 app.get("/api/statistics", (req, res) => {
   req.headers.accept = 'application/json';
   CRUD.PullStats(req, res);
