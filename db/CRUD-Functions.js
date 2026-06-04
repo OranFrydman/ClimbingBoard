@@ -102,6 +102,8 @@ const createNewRecords = (req, res) => {
       .replace("T", " "),
     duration: req.body.TimeStamp,
     level: level,
+    board: req.body.Board || null,
+    mode: req.body.Mode || null,
   };
   console.log("Creating new record:", NewRecord);
   // sql.connect();
@@ -127,7 +129,7 @@ const PullStats = (req, res) => {
   let EmailQuery = GetUser(req, res, "email");
   console.log("Pulling stats with " + EmailQuery);
   sql.query(
-    "SELECT ROW_NUMBER() OVER(ORDER BY date DESC) as num, DATE_FORMAT(date,'%Y/%m/%d - %H:%i:%S') as date, duration, level FROM stats WHERE email=? ORDER BY date DESC",
+    "SELECT ROW_NUMBER() OVER(ORDER BY date DESC) as num, DATE_FORMAT(date,'%Y/%m/%d - %H:%i:%S') as date, duration, level, board, mode FROM stats WHERE email=? ORDER BY date DESC",
     EmailQuery,
     (err, data) => {
       if (err) {
@@ -166,7 +168,7 @@ const PullFilters = (req, res) => {
 
   const EmailQuery = GetUser(req, res, "email");
   const placeholders = levelList.map(() => "?").join(",");
-  const sqlQuery = `SELECT ROW_NUMBER() OVER(ORDER BY date DESC) as num, DATE_FORMAT(date,'%Y/%m/%d - %H:%i:%S') as date, duration, level FROM stats WHERE email=? AND level IN (${placeholders}) AND date BETWEEN ? AND ? ORDER BY date DESC`;
+  const sqlQuery = `SELECT ROW_NUMBER() OVER(ORDER BY date DESC) as num, DATE_FORMAT(date,'%Y/%m/%d - %H:%i:%S') as date, duration, level, board, mode FROM stats WHERE email=? AND level IN (${placeholders}) AND date BETWEEN ? AND ? ORDER BY date DESC`;
   const params = [EmailQuery, ...levelList, dateStart, dateFinish];
 
   sql.query(sqlQuery, params, (err, data) => {
@@ -214,6 +216,41 @@ function GetUser(req, res, field) {
   if (field == "email") return "Guest@Guest.Guest";
   if (field == "name") return "Guest";
 }
+const getDashboardStats = (req, res) => {
+  const email = GetUser(req, res, "email");
+  const results = {};
+  let completed = 0;
+  const finish = (key, data) => {
+    results[key] = data;
+    if (++completed === 3) res.json(results);
+  };
+
+  sql.query(
+    `SELECT level, COALESCE(board, 'Unknown') as board,
+     ROUND(AVG(TIME_TO_SEC(duration))) AS avg_seconds
+     FROM stats WHERE email = ? AND board IS NOT NULL
+     GROUP BY level, board
+     ORDER BY board,
+       CASE level WHEN 'easy' THEN 1 WHEN 'medium' THEN 2 WHEN 'hard' THEN 3 ELSE 4 END`,
+    [email],
+    (err, rows) => finish('avgPerformance', err ? [] : rows)
+  );
+
+  sql.query(
+    'SELECT COUNT(*) as total FROM stats WHERE email = ?',
+    [email],
+    (err, rows) => finish('totalClimbs', err ? 0 : rows[0].total)
+  );
+
+  sql.query(
+    `SELECT ROUND(AVG(daily_count), 1) as avg_per_session
+     FROM (SELECT DATE(date) as d, COUNT(*) as daily_count
+           FROM stats WHERE email = ? GROUP BY DATE(date)) as daily`,
+    [email],
+    (err, rows) => finish('avgPerSession', err ? 0 : (rows[0].avg_per_session || 0))
+  );
+};
+
 const googleVerify = (accessToken, refreshToken, profile, done) => {
   const email = profile.emails[0].value;
   const googleId = profile.id;
@@ -245,5 +282,6 @@ module.exports = {
   PullStats,
   PullFilters,
   DeleteUser,
+  getDashboardStats,
   googleVerify,
 };
